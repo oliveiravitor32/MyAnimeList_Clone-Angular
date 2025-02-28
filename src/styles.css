@@ -11,11 +11,13 @@
 
 html,
 body {
+  background-color: #121212;
   height: 100%;
 }
 
 body {
-  max-width: 1380px;
+  max-width: 1060px;
+  margin: 0 auto;
 }
 
 ul,
