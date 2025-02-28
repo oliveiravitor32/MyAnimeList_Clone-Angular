@@ -9,6 +9,15 @@
   box-sizing: border-box;
 }
 
+html,
+body {
+  height: 100%;
+}
+
+body {
+  max-width: 1380px;
+}
+
 ul,
 ol {
   list-style: none;
