@@ -18,6 +18,6 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     NgOptimizedImage,
     FontAwesomeModule,
   ],
-  exports: [HeaderComponent],
+  exports: [HeaderComponent, NavbarModule],
 })
 export class SharedComponentsModule {}

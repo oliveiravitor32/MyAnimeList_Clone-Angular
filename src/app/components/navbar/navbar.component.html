@@ -1,1 +1,5 @@
-<p>navbar works!</p>
+<nav class="flex bg-blue-dark">
+  @for (linkGroup of LinkGroupsList; track $index) {
+  <app-dropdown-link [linkGroup]="linkGroup"></app-dropdown-link>
+  }
+</nav>

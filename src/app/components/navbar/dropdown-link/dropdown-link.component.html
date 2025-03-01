@@ -1,1 +1,28 @@
-<p>dropdown-link works!</p>
+<div
+  class="relative"
+  (mouseenter)="openDropdown()"
+  (mouseleave)="closeDropdown()"
+>
+  <button
+    class="text-white hover:cursor-default px-2.5 py-1 font-medium"
+    [class]="isOpen ? 'bg-gray-extralight' : ''"
+    type="button"
+    aria-haspopup="true"
+    aria-expanded="false"
+  >
+    {{ linkGroup.title }}
+  </button>
+  @if (isOpen) {
+  <div
+    class="absolute flex flex-col text-nowrap gap-2 bg-gray-extralight text-white font-normal text-sm"
+  >
+    @for (link of linkGroup.linksList; track $index) {
+    <a
+      class="hover:bg-slate-200 hover:text-black px-2.5 py-2"
+      href="{{ link.path }}"
+      >{{ link.title }}</a
+    >
+    }
+  </div>
+  }
+</div>
