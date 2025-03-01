@@ -1,18 +1,42 @@
 <header
-  class="text-white flex flex-row justify-between items-center bg-blue-300"
+  class="text-white flex flex-row justify-between items-center px-1 sm:px-2 lg:px-0"
 >
-  <div class="flex basis-2/4 justify-between">
-    <a href="" class="font-bold text-3xl">MyAnimeList</a>
-    <img
-      src="https://myanimelist.net/c/img/resources/mb/mini_banner_20250211_writing_contest.png"
-      alt=""
-      class="max-h-9"
-    />
+  <div class="flex lg:basis-7/12 justify-between items-center">
+    <a href="" class="font-bold text-3xl hidden md:block">MyAnimeList</a>
+    <a href="" class="font-bold text-2xl sm:text-3xl md:hidden">MAL</a>
+    <a href="" class="hidden lg:block">
+      <img
+        ngSrc="https://myanimelist.net/c/img/resources/mb/mini_banner_20250211_writing_contest.png"
+        alt="MyAnimeList Writing Contest Announcement"
+        height="36"
+        width="250"
+        loading="lazy"
+        class="pt-1.5"
+      />
+    </a>
   </div>
 
-  <div>
-    <a href="" class="text-blue-300 font-semibold">Hide Ads</a>
-    <button class="bg-gray-600 px-5 ml-8">Login</button>
-    <button class="bg-blue-600 px-5 ml-2">Sign Up</button>
+  <div class="flex items-center">
+    <a href="" class="text-blue-200 text-xs sm:text-sm font-medium md:font-bold"
+      >Hide Ads</a
+    >
+    <button
+      aria-label="Login"
+      class="bg-gray-600 px-1.5 sm:px-4 md:px-8 py-px ml-3 sm:ml-8 font-medium md:font-bold rounded-sm text-xs sm:text-sm"
+    >
+      Login
+    </button>
+    <button
+      aria-label="Sign Up"
+      class="bg-blue-600 px-1.5 sm:px-4 md:px-8 py-px ml-2 font-medium md:font-bold rounded-sm text-xs sm:text-sm"
+    >
+      Sign Up
+    </button>
+    <button class="md:hidden" aria-label="Search">
+      <fa-icon [icon]="searchIcon" class="text-xl ml-3"></fa-icon>
+    </button>
+    <button class="md:hidden" aria-label="Open Menu">
+      <fa-icon [icon]="hamburgerMenuIcon" class="text-2xl ml-3"></fa-icon>
+    </button>
   </div>
 </header>
