@@ -1,5 +1,6 @@
 import { LinkGroupsList } from './../../types/link-groups';
 import { Component } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { faMagnifyingGlass, faTimes } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
@@ -12,6 +13,11 @@ export class NavbarComponent {
 
   searchIcon = faMagnifyingGlass;
   closeIcon = faTimes;
+
+  searchForm = new FormGroup({
+    category: new FormControl('All'),
+    text: new FormControl('', Validators.required),
+  });
 
   get isInputEmpty(): boolean {
     return this.searchText.trim().length === 0;
@@ -91,5 +97,9 @@ export class NavbarComponent {
 
   clearSearch() {
     this.searchText = '';
+  }
+
+  onSubmit() {
+    throw new Error('Method not implemented.');
   }
 }
