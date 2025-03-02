@@ -1,5 +1,6 @@
 import { LinkGroupsList } from './../../types/link-groups';
 import { Component } from '@angular/core';
+import { faMagnifyingGlass, faTimes } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-navbar',
@@ -7,6 +8,15 @@ import { Component } from '@angular/core';
   styleUrl: './navbar.component.css',
 })
 export class NavbarComponent {
+  searchText: string = '';
+
+  searchIcon = faMagnifyingGlass;
+  closeIcon = faTimes;
+
+  get isInputEmpty(): boolean {
+    return this.searchText.trim().length === 0;
+  }
+
   LinkGroupsList: LinkGroupsList = [
     {
       title: 'Anime',
@@ -78,4 +88,8 @@ export class NavbarComponent {
       ],
     },
   ];
+
+  clearSearch() {
+    this.searchText = '';
+  }
 }

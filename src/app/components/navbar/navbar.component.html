@@ -1,5 +1,46 @@
-<nav class="flex bg-blue-dark">
-  @for (linkGroup of LinkGroupsList; track $index) {
-  <app-dropdown-link [linkGroup]="linkGroup"></app-dropdown-link>
-  }
+<nav class="hidden md:flex justify-between bg-blue-dark pr-1.5 lg:pr-2.5">
+  <div class="flex">
+    @for (linkGroup of LinkGroupsList; track $index) {
+    <app-dropdown-link [linkGroup]="linkGroup"></app-dropdown-link>
+    }
+  </div>
+  <div class="flex items-center">
+    <select class="bg-gray-dark text-white h-6 text-xs px-1 w-20">
+      <option selected>All</option>
+      <option value="1">Anime</option>
+      <option value="2">Manga</option>
+      <option value="3">Characters</option>
+      <option value="4">People</option>
+      <option value="5">Companies</option>
+      <option value="6">Manga store</option>
+      <option value="7">News</option>
+      <option value="8">Featured Articles</option>
+      <option value="9">Forum</option>
+      <option value="10">Clubs</option>
+      <option value="11">Users</option>
+    </select>
+    <div class="relative h-full">
+      <input
+        class="bg-gray-dark text-white text-xs w-52 lg:w-72 h-6 ml-0.5 px-1"
+        type="text"
+        placeholder="Search Anime, Manga, and more..."
+        [(ngModel)]="searchText"
+      />
+      @if (!isInputEmpty) {
+      <button
+        class="absolute right-1 top-1/2 transform -translate-y-1/2"
+        (click)="clearSearch()"
+        aria-label="Clear search"
+      >
+        <fa-icon class="text-blue-light" [icon]="closeIcon"></fa-icon>
+      </button>
+      }
+    </div>
+    <button
+      class="flex items-center justify-center bg-gray-light px-1 h-6 rounded-e"
+      aria-label="Search"
+    >
+      <fa-icon [icon]="searchIcon" class="text-gray-extralight"></fa-icon>
+    </button>
+  </div>
 </nav>
