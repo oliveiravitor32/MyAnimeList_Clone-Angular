@@ -1,6 +1,6 @@
-import { LinkGroupsList } from '../types/link-groups-list';
+import { NavbarLinkGroupsList } from '../types/navbar-link-groups-list';
 
-export const navbarLinkGroupsData: LinkGroupsList = [
+export const navbarLinkGroupsData: NavbarLinkGroupsList = [
   {
     title: 'Anime',
     linksList: [

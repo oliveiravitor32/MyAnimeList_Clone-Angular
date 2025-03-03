@@ -1,4 +1,4 @@
-export interface ILink {
+export interface INavbarLink {
   title: string;
   path: string;
 }
