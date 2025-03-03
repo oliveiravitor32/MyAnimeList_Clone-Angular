@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { faMagnifyingGlass, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { AnimesResponseDataList } from '../../../types/animes-reponse-data-list';
 import { categoryTypeArray } from '../../../utils/category-type-description-map';
-import { CategoryTypeEnum } from '../../../enums/categoy-type.enum';
 
 @Component({
   selector: 'app-search-bar',
@@ -11,6 +11,8 @@ import { CategoryTypeEnum } from '../../../enums/categoy-type.enum';
 })
 export class SearchBarComponent {
   @Input({ required: true }) searchForm!: FormGroup;
+  @Input({ required: true }) searchedData: AnimesResponseDataList = [];
+
   @Output('onFormSubmit') onFormSubmitEmitt = new EventEmitter<void>();
 
   searchIcon = faMagnifyingGlass;

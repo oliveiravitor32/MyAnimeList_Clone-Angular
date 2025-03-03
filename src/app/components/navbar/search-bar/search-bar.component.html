@@ -1,50 +1,64 @@
-<div>
-  <form
-    [formGroup]="searchForm"
-    class="flex items-center"
-    (ngSubmit)="onSubmit()"
-  >
-    <label for="search-bar-select-input" class="sr-only">Select Category</label>
-    <select
-      id="search-bar-select-input"
-      class="bg-gray-dark text-white rounded-s h-6 text-xs px-1 w-20"
-      aria-label="Select Category"
-      formControlName="category"
-    >
-      @for (category of categoryTypeArray; track $index) {
-      <option [value]="category.code">
-        {{ category.description }}
-      </option>
-      }
-    </select>
-    <div class="relative flex items-center">
-      <label for="search-bar-text-input" class="sr-only">Search</label>
-      <input
-        id="search-bar-text-input"
-        class="bg-gray-dark text-white text-xs w-52 lg:w-72 h-6 ml-0.5 px-1"
-        type="text"
-        placeholder="Search Anime, Manga, and more..."
-        formControlName="text"
-        aria-label="Search Anime, Manga, and more"
-      />
-      @if (searchForm.valid) {
-      <button
-        class="absolute right-1 top-1/2 transform -translate-y-1/2"
-        (click)="clearSearch()"
-        type="button"
-        aria-label="Clear search"
+<div class="h-full relative">
+  <div class="h-full flex items-center">
+    <form class="flex" [formGroup]="searchForm" (ngSubmit)="onSubmit()">
+      <label for="search-bar-select-input" class="sr-only"
+        >Select Category</label
       >
-        <fa-icon class="text-blue-light" [icon]="closeIcon"></fa-icon>
+      <select
+        id="search-bar-select-input"
+        class="bg-gray-dark text-white rounded-s h-6 text-xs px-1 w-20"
+        aria-label="Select Category"
+        formControlName="category"
+      >
+        @for (category of categoryTypeArray; track $index) {
+        <option [value]="category.code">
+          {{ category.description }}
+        </option>
+        }
+      </select>
+      <div class="relative flex items-center">
+        <label for="search-bar-text-input" class="sr-only">Search</label>
+        <input
+          id="search-bar-text-input"
+          class="bg-gray-dark text-white text-xs w-52 lg:w-72 h-6 ml-0.5 px-1"
+          type="text"
+          placeholder="Search Anime, Manga, and more..."
+          formControlName="text"
+          aria-label="Search Anime, Manga, and more"
+        />
+        @if (searchForm.valid) {
+        <button
+          class="absolute right-1 top-1/2 transform -translate-y-1/2"
+          (click)="clearSearch()"
+          type="button"
+          aria-label="Clear search"
+        >
+          <fa-icon class="text-blue-light" [icon]="closeIcon"></fa-icon>
+        </button>
+        }
+      </div>
+      <button
+        class="flex items-center justify-center bg-gray-light px-1.5 h-6 rounded-e text-white disabled:text-gray-extralight"
+        aria-label="Search"
+        type="submit"
+        [disabled]="!searchForm.valid"
+      >
+        <fa-icon [icon]="searchIcon" class="text-inherit text-xs"></fa-icon>
       </button>
+    </form>
+  </div>
+  <div
+    class="absolute w-full bg-gray-light text-white"
+    [class]="searchedData.length > 0 ? 'block' : 'hidden'"
+  >
+    <ol>
+      @for (data of searchedData; track $index) {
+      <li class="hover:bg-gray-extralight hover:py-2">
+        <a href="">
+          {{ data.title }}
+        </a>
+      </li>
       }
-    </div>
-    <button
-      class="flex items-center justify-center bg-gray-light px-1.5 h-6 rounded-e text-white disabled:text-gray-extralight"
-      aria-label="Search"
-      type="submit"
-      [disabled]="!searchForm.valid"
-    >
-      <fa-icon [icon]="searchIcon" class="text-inherit text-xs"></fa-icon>
-    </button>
-  </form>
+    </ol>
+  </div>
 </div>

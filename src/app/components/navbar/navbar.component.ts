@@ -1,4 +1,4 @@
-import { CategoryTypeEnum } from './../../enums/categoy-type.enum';
+import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import {
@@ -8,11 +8,11 @@ import {
   switchMap,
   take,
 } from 'rxjs/operators';
-import { AnimesResponseDataList } from '../../types/animes-reponse-data-list';
 import { SearchService } from '../../services/search.service';
-import { HttpParams } from '@angular/common/http';
+import { AnimesResponseDataList } from '../../types/animes-reponse-data-list';
 import { convertCategoryToSearchMethodMap } from '../../utils/convert-category-to-search-method-map';
 import { navbarLinkGroupsData } from '../../utils/navbar-link-groups-data';
+import { CategoryTypeEnum } from './../../enums/categoy-type.enum';
 
 @Component({
   selector: 'app-navbar',
@@ -20,7 +20,7 @@ import { navbarLinkGroupsData } from '../../utils/navbar-link-groups-data';
   styleUrl: './navbar.component.css',
 })
 export class NavbarComponent implements OnInit {
-  searchedAnimes: AnimesResponseDataList = [];
+  searchedData: AnimesResponseDataList = [];
 
   searchForm = new FormGroup({
     category: new FormControl(CategoryTypeEnum.ALL),
@@ -59,7 +59,7 @@ export class NavbarComponent implements OnInit {
         }) // Cancel previous request if new request is made and take only the first response
       )
       .subscribe((results) => {
-        this.searchedAnimes = results.data;
+        this.searchedData = results.data;
         console.log(results.data);
       });
   }
