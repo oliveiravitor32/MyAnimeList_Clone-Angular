@@ -1,3 +1,3 @@
-import { IMangaResponseData } from '../interfaces/mangas-reponse/manga-response-data.interface';
+import { IMangasResponseData } from '../interfaces/mangas-reponse/mangas-response-data.interface';
 
-export type MangasResponseDataList = IMangaResponseData[];
+export type MangasResponseDataList = IMangasResponseData[];

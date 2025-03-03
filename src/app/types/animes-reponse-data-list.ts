@@ -1,3 +1,3 @@
-import { IAnimeResponseData } from '../interfaces/animes-response/anime-response-data.interface';
+import { IAnimesResponseData } from '../interfaces/animes-response/animes-response-data.interface';
 
-export type AnimesResponseDataList = IAnimeResponseData[];
+export type AnimesResponseDataList = IAnimesResponseData[];

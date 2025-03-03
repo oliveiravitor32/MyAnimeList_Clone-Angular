@@ -1,4 +1,4 @@
-export interface IMangaResponseData {
+export interface IMangasResponseData {
   mal_id: number;
   url: string;
   images: {

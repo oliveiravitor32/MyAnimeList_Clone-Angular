@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
-import { environment } from '../environments/environment';
-import { IAnimeResponse } from '../interfaces/animes-response/animes-reponse.interface';
-import { catchError, Observable, throwError } from 'rxjs';
 import { HttpClient, HttpParams } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { catchError, Observable, throwError } from 'rxjs';
+import { environment } from '../environments/environment';
+import { IAnimesResponse } from '../interfaces/animes-response/animes-reponse.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -15,7 +15,7 @@ export class SearchService {
   getAnimesByName(
     name: string,
     additionalParams: HttpParams
-  ): Observable<IAnimeResponse> {
+  ): Observable<IAnimesResponse> {
     let params = new HttpParams().set('q', name);
 
     // Merge additionalParams into params
@@ -24,7 +24,7 @@ export class SearchService {
     });
 
     return this._httpClient
-      .get<IAnimeResponse>(`${this.API_URL}`, {
+      .get<IAnimesResponse>(`${this.API_URL}`, {
         params,
       })
       .pipe(

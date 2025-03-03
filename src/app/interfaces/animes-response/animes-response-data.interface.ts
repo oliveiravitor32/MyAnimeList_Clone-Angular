@@ -1,4 +1,4 @@
-export interface IAnimeResponseData {
+export interface IAnimesResponseData {
   mal_id: number;
   url: string;
   images: {
