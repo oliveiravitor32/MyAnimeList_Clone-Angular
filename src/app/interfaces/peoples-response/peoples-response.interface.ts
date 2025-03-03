@@ -3,5 +3,5 @@ import { IPaginationResponse } from '../pagination-response.interface';
 
 export interface IPeoplesResponse {
   data: PeoplesResponseDataList;
-  paginations: IPaginationResponse;
+  pagination: IPaginationResponse;
 }
