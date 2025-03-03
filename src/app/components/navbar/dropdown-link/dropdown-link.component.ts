@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { ILinkGroup } from '../../../interfaces/link/link-group.interface';
+import { INavbarLinkGroup } from '../../../interfaces/navbar-links/navbar-link-group.interface';
 
 @Component({
   selector: 'app-dropdown-link',
@@ -7,7 +7,7 @@ import { ILinkGroup } from '../../../interfaces/link/link-group.interface';
   styleUrl: './dropdown-link.component.css',
 })
 export class DropdownLinkComponent {
-  @Input({ required: true }) linkGroup: ILinkGroup = {
+  @Input({ required: true }) linkGroup: INavbarLinkGroup = {
     title: '',
     linksList: [],
   };
