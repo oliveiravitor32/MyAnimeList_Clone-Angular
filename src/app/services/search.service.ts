@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, throwError } from 'rxjs';
 import { environment } from '../environments/environment';
-import { IAnimesResponse } from '../interfaces/animes-response/animes-reponse.interface';
+import { IAnimesResponse } from '../interfaces/animes-response/animes-response.interface';
 
 @Injectable({
   providedIn: 'root',

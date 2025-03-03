@@ -1,8 +1,8 @@
-import { Observable } from 'rxjs';
-import { IAnimeResponse } from '../interfaces/animes-response/animes-reponse.interface';
-import { SearchService } from '../services/search.service';
 import { HttpParams } from '@angular/common/http';
+import { Observable } from 'rxjs';
 import { CategoryTypeEnum } from '../enums/categoy-type.enum';
+import { IAnimesResponse } from '../interfaces/animes-response/animes-response.interface';
+import { SearchService } from '../services/search.service';
 
 export const convertCategoryToSearchMethodMap = (
   _searchService: SearchService
@@ -10,7 +10,7 @@ export const convertCategoryToSearchMethodMap = (
   [key in CategoryTypeEnum]: (
     name: string,
     params: HttpParams
-  ) => Observable<IAnimeResponse>;
+  ) => Observable<IAnimesResponse>;
 } => ({
   [CategoryTypeEnum.ALL]: _searchService.getAnimesByName.bind(_searchService),
   [CategoryTypeEnum.ANIME]: _searchService.getAnimesByName.bind(_searchService),

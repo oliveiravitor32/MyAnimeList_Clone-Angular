@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { faMagnifyingGlass, faTimes } from '@fortawesome/free-solid-svg-icons';
-import { AnimesResponseDataList } from '../../../types/animes-reponse-data-list';
+import { AnimesResponseDataList } from '../../../types/animes-response-data-list';
 import { categoryTypeArray } from '../../../utils/category-type-description-map';
 
 @Component({

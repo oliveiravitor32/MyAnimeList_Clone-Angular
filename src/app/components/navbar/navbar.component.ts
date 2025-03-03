@@ -9,7 +9,7 @@ import {
   take,
 } from 'rxjs/operators';
 import { SearchService } from '../../services/search.service';
-import { AnimesResponseDataList } from '../../types/animes-reponse-data-list';
+import { AnimesResponseDataList } from '../../types/animes-response-data-list';
 import { convertCategoryToSearchMethodMap } from '../../utils/convert-category-to-search-method-map';
 import { navbarLinkGroupsData } from '../../utils/navbar-link-groups-data';
 import { CategoryTypeEnum } from './../../enums/categoy-type.enum';
@@ -34,7 +34,10 @@ export class NavbarComponent implements OnInit {
   constructor(private readonly _searchService: SearchService) {}
 
   ngOnInit(): void {
-    // Use the util covert method to get the search method for each category
+    this.watchTextInputAndSearch();
+  }
+  watchTextInputAndSearch() {
+    // Use the util convert method to get the search method for each category
     const categoryMethodMap = convertCategoryToSearchMethodMap(
       this._searchService
     );
