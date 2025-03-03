@@ -1,15 +1,13 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NavbarComponent } from './navbar.component';
+import { NgModule } from '@angular/core';
 import { DropdownLinkComponent } from './dropdown-link/dropdown-link.component';
+import { NavbarComponent } from './navbar.component';
 
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { ReactiveFormsModule } from '@angular/forms';
-import { SearchBarComponent } from './search-bar/search-bar.component';
+import { SearchBarModule } from './search-bar/search-bar.module';
 
 @NgModule({
-  declarations: [NavbarComponent, DropdownLinkComponent, SearchBarComponent],
-  imports: [CommonModule, FontAwesomeModule, ReactiveFormsModule],
+  declarations: [NavbarComponent, DropdownLinkComponent],
+  imports: [CommonModule, SearchBarModule],
   exports: [NavbarComponent],
 })
 export class NavbarModule {}
