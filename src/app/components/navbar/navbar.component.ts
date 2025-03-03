@@ -1,4 +1,3 @@
-import { categoryTypeArray } from './../../utils/category-type-description-map';
 import { CategoryTypeEnum } from './../../enums/categoy-type.enum';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
@@ -9,12 +8,11 @@ import {
   switchMap,
   take,
 } from 'rxjs/operators';
-import { faMagnifyingGlass, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { AnimesResponseDataList } from '../../types/animes-reponse-data-list';
-import { LinkGroupsList } from '../../types/link-groups-list';
 import { SearchService } from '../../services/search.service';
 import { HttpParams } from '@angular/common/http';
 import { convertCategoryToSearchMethodMap } from '../../utils/convert-category-to-search-method-map';
+import { navbarLinkGroupsData } from '../../utils/navbar-link-groups-data';
 
 @Component({
   selector: 'app-navbar',
@@ -22,97 +20,21 @@ import { convertCategoryToSearchMethodMap } from '../../utils/convert-category-t
   styleUrl: './navbar.component.css',
 })
 export class NavbarComponent implements OnInit {
-  searchIcon = faMagnifyingGlass;
-  closeIcon = faTimes;
-
   searchedAnimes: AnimesResponseDataList = [];
 
-  get categoryTypeArray() {
-    return categoryTypeArray;
-  }
-
   searchForm = new FormGroup({
-    category: new FormControl(
-      this.categoryTypeArray[0]?.code || CategoryTypeEnum.ALL
-    ),
+    category: new FormControl(CategoryTypeEnum.ALL),
     text: new FormControl('', Validators.required),
   });
 
-  LinkGroupsList: LinkGroupsList = [
-    {
-      title: 'Anime',
-      linksList: [
-        { title: 'Anime Search', path: '' },
-        { title: 'Top Anime', path: '' },
-        { title: 'Seasonal Anime', path: '' },
-        { title: 'Videos', path: '' },
-        { title: 'Reviews', path: '' },
-        { title: 'Recommendations', path: '' },
-        { title: '2024 Challenge', path: '' },
-        { title: 'Fantasy Anime League', path: '' },
-      ],
-    },
-    {
-      title: 'Manga',
-      linksList: [
-        { title: 'Manga Search', path: '' },
-        { title: 'Top Manga', path: '' },
-        { title: 'Adapted to Anime', path: '' },
-        { title: 'Manga Store', path: '' },
-        { title: 'Reviews', path: '' },
-        { title: 'Recommendations', path: '' },
-        { title: '2024 Challenge', path: '' },
-      ],
-    },
-    {
-      title: 'Community',
-      linksList: [
-        { title: 'Interest Stacks', path: '' },
-        { title: 'Forums', path: '' },
-        { title: 'Clubs', path: '' },
-        { title: 'Blogs', path: '' },
-        { title: 'Users', path: '' },
-      ],
-    },
-    {
-      title: 'Industry',
-      linksList: [
-        { title: 'News', path: '' },
-        { title: 'Featured Articles', path: '' },
-        { title: 'People', path: '' },
-        { title: 'Characters', path: '' },
-        { title: 'Companies', path: '' },
-        { title: 'MAL x Japan', path: '' },
-      ],
-    },
-    {
-      title: 'Watch',
-      linksList: [
-        { title: 'Episode Videos', path: '' },
-        { title: 'Anime Trailers', path: '' },
-      ],
-    },
-    {
-      title: 'Read',
-      linksList: [{ title: 'Manga Store', path: '' }],
-    },
-    {
-      title: 'Help',
-      linksList: [
-        { title: 'About', path: '' },
-        { title: 'Support', path: '' },
-        { title: 'Advertising', path: '' },
-        { title: 'Faq', path: '' },
-        { title: 'Report', path: '' },
-        { title: 'Staff', path: '' },
-        { title: 'MAL Supporter', path: '' },
-      ],
-    },
-  ];
+  get linkGroupsList() {
+    return navbarLinkGroupsData;
+  }
 
   constructor(private readonly _searchService: SearchService) {}
 
   ngOnInit(): void {
+    // Use the util covert method to get the search method for each category
     const categoryMethodMap = convertCategoryToSearchMethodMap(
       this._searchService
     );
@@ -142,12 +64,7 @@ export class NavbarComponent implements OnInit {
       });
   }
 
-  clearSearch() {
-    console.log('');
-    this.searchForm.get('text')!.reset();
-  }
-
-  onSubmit() {
-    // TODO
+  onFormSubmit() {
+    // TODO: Implement the navigation to the search page
   }
 }
