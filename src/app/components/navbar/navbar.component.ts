@@ -1,27 +1,42 @@
-import { LinkGroupsList } from './../../types/link-groups';
-import { Component } from '@angular/core';
+import { categoryTypeArray } from './../../utils/category-type-description-map';
+import { CategoryTypeEnum } from './../../enums/categoy-type.enum';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  debounceTime,
+  distinctUntilChanged,
+  filter,
+  switchMap,
+  take,
+} from 'rxjs/operators';
 import { faMagnifyingGlass, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { AnimesResponseDataList } from '../../types/animes-reponse-data-list';
+import { LinkGroupsList } from '../../types/link-groups-list';
+import { SearchService } from '../../services/search.service';
+import { HttpParams } from '@angular/common/http';
+import { convertCategoryToSearchMethodMap } from '../../utils/convert-category-to-search-method-map';
 
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css',
 })
-export class NavbarComponent {
-  searchText: string = '';
-
+export class NavbarComponent implements OnInit {
   searchIcon = faMagnifyingGlass;
   closeIcon = faTimes;
 
+  searchedAnimes: AnimesResponseDataList = [];
+
+  get categoryTypeArray() {
+    return categoryTypeArray;
+  }
+
   searchForm = new FormGroup({
-    category: new FormControl('All'),
+    category: new FormControl(
+      this.categoryTypeArray[0]?.code || CategoryTypeEnum.ALL
+    ),
     text: new FormControl('', Validators.required),
   });
-
-  get isInputEmpty(): boolean {
-    return this.searchText.trim().length === 0;
-  }
 
   LinkGroupsList: LinkGroupsList = [
     {
@@ -95,11 +110,44 @@ export class NavbarComponent {
     },
   ];
 
+  constructor(private readonly _searchService: SearchService) {}
+
+  ngOnInit(): void {
+    const categoryMethodMap = convertCategoryToSearchMethodMap(
+      this._searchService
+    );
+
+    this.searchForm
+      .get('text')
+      ?.valueChanges.pipe(
+        debounceTime(400), // Wait for 400ms pause in events
+        distinctUntilChanged(), // Only emit if value is different from previous value
+        filter((query) => query !== null && query.trim().length > 0), // Filter out empty values
+        switchMap((query) => {
+          const category = this.searchForm.get('category')
+            ?.value as CategoryTypeEnum;
+
+          const additionalParams = new HttpParams()
+            .set('order_by', 'popularity')
+            .set('page', '1')
+            .set('limit', '10');
+
+          const searchMethod = categoryMethodMap[category];
+          return searchMethod(query!, additionalParams).pipe(take(1));
+        }) // Cancel previous request if new request is made and take only the first response
+      )
+      .subscribe((results) => {
+        this.searchedAnimes = results.data;
+        console.log(results.data);
+      });
+  }
+
   clearSearch() {
-    this.searchText = '';
+    console.log('');
+    this.searchForm.get('text')!.reset();
   }
 
   onSubmit() {
-    throw new Error('Method not implemented.');
+    // TODO
   }
 }

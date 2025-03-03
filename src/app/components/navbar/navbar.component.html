@@ -18,18 +18,11 @@
       aria-label="Select Category"
       formControlName="category"
     >
-      <option selected>All</option>
-      <option value="1">Anime</option>
-      <option value="2">Manga</option>
-      <option value="3">Characters</option>
-      <option value="4">People</option>
-      <option value="5">Companies</option>
-      <option value="6">Manga store</option>
-      <option value="7">News</option>
-      <option value="8">Featured Articles</option>
-      <option value="9">Forum</option>
-      <option value="10">Clubs</option>
-      <option value="11">Users</option>
+      @for (category of categoryTypeArray; track $index) {
+      <option [value]="category.code">
+        {{ category.description }}
+      </option>
+      }
     </select>
     <div class="relative flex items-center">
       <label for="search-bar-text-input" class="sr-only">Search</label>
