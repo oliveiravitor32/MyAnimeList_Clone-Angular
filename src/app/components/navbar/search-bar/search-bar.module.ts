@@ -3,10 +3,10 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { SearchBarComponent } from './search-bar.component';
-import { SearchResultItemComponent } from './search-result-item/search-result-item.component';
+import { SearchResultsComponent } from './search-results/search-results.component';
 
 @NgModule({
-  declarations: [SearchBarComponent, SearchResultItemComponent],
+  declarations: [SearchBarComponent, SearchResultsComponent],
   imports: [CommonModule, FontAwesomeModule, ReactiveFormsModule],
   exports: [SearchBarComponent],
 })

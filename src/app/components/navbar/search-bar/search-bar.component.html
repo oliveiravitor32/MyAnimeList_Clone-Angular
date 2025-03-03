@@ -47,18 +47,6 @@
       </button>
     </form>
   </div>
-  <div
-    class="absolute w-full bg-gray-light text-white"
-    [class]="searchedData.length > 0 ? 'block' : 'hidden'"
-  >
-    <ol>
-      @for (data of searchedData; track $index) {
-      <li class="hover:bg-gray-extralight hover:py-2">
-        <a href="">
-          {{ data.title }}
-        </a>
-      </li>
-      }
-    </ol>
-  </div>
+
+  <app-search-results></app-search-results>
 </div>
