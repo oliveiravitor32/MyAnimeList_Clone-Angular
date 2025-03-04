@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { AnimesResponseDataList } from '../../../../types/animes-response-data-list';
 
 @Component({
@@ -9,4 +10,7 @@ import { AnimesResponseDataList } from '../../../../types/animes-response-data-l
 export class SearchResultsComponent {
   @Input({ required: true }) searchedData: AnimesResponseDataList = [];
   @Input({ required: true }) searchedText: string = '';
+  @Input({ required: true }) isSearching: boolean = false;
+
+  spinnerIcon = faSpinner;
 }

@@ -48,11 +48,13 @@
       </button>
     </form>
   </div>
-  @if(showResults && searchedData.length > 0 && searchedText) {
+  @if(showResultsOnTextInputFocus && searchedData.length > 0 && searchedText ||
+  isSearching) {
   <div class="absolute w-full">
     <app-search-results
       [searchedText]="searchedText"
       [searchedData]="searchedData"
+      [isSearching]="isSearching"
     ></app-search-results>
   </div>
   }

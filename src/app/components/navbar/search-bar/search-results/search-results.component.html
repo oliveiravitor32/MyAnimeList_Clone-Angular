@@ -1,4 +1,5 @@
 <div>
+  @if (!isSearching) {
   <ul class="flex flex-col">
     @for (data of searchedData; track $index) {
     <li
@@ -47,10 +48,18 @@
     </li>
     }
   </ul>
+  }
   <div class="rounded-b-md">
     <a
-      class="rounded-b-md text-white bg-neutral-700 text-xs hover:cursor-pointer hover:text-black hover:bg-neutral-300 py-3 pl-2 h-full w-full block"
+      class="rounded-b-md flex items-center gap-1 text-white bg-neutral-700 text-xs hover:cursor-pointer hover:text-black hover:bg-neutral-300 py-3 pl-2 h-full w-full"
       >View all results for <b>{{ searchedText }}</b>
+      @if(isSearching) {
+      <fa-icon
+        [icon]="spinnerIcon"
+        class="text-neutral-100 text-base"
+        animation="spin"
+      ></fa-icon>
+      }
     </a>
   </div>
 </div>

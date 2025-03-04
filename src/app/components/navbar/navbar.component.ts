@@ -26,6 +26,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   searchSubscription: Subscription | null | undefined = null;
 
+  isSearching: boolean = false;
+
   searchForm = new FormGroup({
     category: new FormControl(CategoryTypeEnum.ALL),
     text: new FormControl('', Validators.required),
@@ -66,6 +68,9 @@ export class NavbarComponent implements OnInit, OnDestroy {
           return currQuery !== null && currQuery.trim().length > 0;
         }), // Filter out empty values
         switchMap(([prevQuery, currQuery]) => {
+          // Set loading state to true when a new search is made
+          this.isSearching = true;
+
           const category = this.searchForm.get('category')
             ?.value as CategoryTypeEnum;
 
@@ -79,6 +84,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
         }) // Cancel previous request if new request is made and take only the first response
       )
       .subscribe((results) => {
+        // Set loading state to false when the search is completed
+        this.isSearching = false;
         this.searchedData = results.data;
         console.log(results.data);
       });

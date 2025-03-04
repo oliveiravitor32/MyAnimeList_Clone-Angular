@@ -20,6 +20,7 @@ import { categoryTypeArray } from '../../../utils/category-type-description-map'
 export class SearchBarComponent implements AfterViewInit {
   @Input({ required: true }) searchForm!: FormGroup;
   @Input({ required: true }) searchedData: AnimesResponseDataList = [];
+  @Input({ required: true }) isSearching: boolean = false;
 
   @Output('onFormSubmit') onFormSubmitEmitt = new EventEmitter<void>();
 
@@ -28,7 +29,7 @@ export class SearchBarComponent implements AfterViewInit {
   searchIcon = faMagnifyingGlass;
   closeIcon = faTimes;
 
-  showResults = false;
+  showResultsOnTextInputFocus = false;
 
   get categoryTypeArray() {
     return categoryTypeArray;
@@ -44,11 +45,11 @@ export class SearchBarComponent implements AfterViewInit {
 
   watchInputTextFocusAndShowResults() {
     this.searchInput.nativeElement.addEventListener('focus', () => {
-      this.showResults = true;
+      this.showResultsOnTextInputFocus = true;
     });
 
     this.searchInput.nativeElement.addEventListener('blur', () => {
-      this.showResults = false;
+      this.showResultsOnTextInputFocus = false;
     });
   }
 
