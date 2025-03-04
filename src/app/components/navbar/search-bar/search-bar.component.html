@@ -19,6 +19,7 @@
       <div class="relative flex items-center">
         <label for="search-bar-text-input" class="sr-only">Search</label>
         <input
+          #searchTextInput
           id="search-bar-text-input"
           class="bg-gray-dark text-white text-xs w-52 lg:w-72 h-6 ml-0.5 px-1"
           type="text"
@@ -47,10 +48,12 @@
       </button>
     </form>
   </div>
+  @if(showResults && searchedData.length > 0 && searchedText) {
   <div class="absolute w-full">
     <app-search-results
       [searchedText]="searchedText"
       [searchedData]="searchedData"
     ></app-search-results>
   </div>
+  }
 </div>
