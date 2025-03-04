@@ -47,6 +47,10 @@
       </button>
     </form>
   </div>
-
-  <app-search-results></app-search-results>
+  <div class="absolute w-full">
+    <app-search-results
+      [searchedText]="searchedText"
+      [searchedData]="searchedData"
+    ></app-search-results>
+  </div>
 </div>

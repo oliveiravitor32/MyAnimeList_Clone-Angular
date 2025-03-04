@@ -1,1 +1,56 @@
-<p>search-results works!</p>
+<div>
+  <ul class="flex flex-col">
+    @for (data of searchedData; track $index) {
+    <li
+      class="group hover:h-24 hover:cursor-pointer bg-gray-light hover:bg-gray-extralight flex gap-2 text-xs font-light p-1"
+    >
+      <div class="relative w-14">
+        <img
+          class="object-cover"
+          [ngSrc]="data.images.webp.image_url"
+          [alt]="data.title"
+          fill="true"
+        />
+      </div>
+      <div class="text-white basis-full w-20">
+        <div class="group-hover:whitespace-normal truncate max-h-12">
+          <h3 class="font-bold text-xs inline">
+            {{ data.title }}
+          </h3>
+          <span class="hidden ml-px group-hover:inline text-xs font-normal"
+            >({{ data.type }})</span
+          >
+        </div>
+
+        <div class="group-hover:hidden">
+          <span>({{ data.type }}, {{ data.aired.prop.from.year }})</span>
+        </div>
+
+        <dl class="hidden group-hover:block">
+          <div class="flex">
+            <dt>Aired:&nbsp;</dt>
+            <dd>
+              {{ data.aired.from | utcDate }} to
+              {{ data.aired.to | utcDate }}
+            </dd>
+          </div>
+          <div class="flex">
+            <dt>Score:&nbsp;</dt>
+            <dd>{{ data.score }}</dd>
+          </div>
+          <div class="flex">
+            <dt>Status:&nbsp;</dt>
+            <dd>{{ data.status }}</dd>
+          </div>
+        </dl>
+      </div>
+    </li>
+    }
+  </ul>
+  <div class="rounded-b-md">
+    <a
+      class="rounded-b-md text-white bg-neutral-700 text-xs hover:cursor-pointer hover:text-black hover:bg-neutral-300 py-3 pl-2 h-full w-full block"
+      >View all results for <b>{{ searchedText }}</b>
+    </a>
+  </div>
+</div>

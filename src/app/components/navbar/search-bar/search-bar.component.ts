@@ -22,6 +22,10 @@ export class SearchBarComponent {
     return categoryTypeArray;
   }
 
+  get searchedText() {
+    return this.searchForm.get('text')?.value;
+  }
+
   clearSearch() {
     this.searchForm.get('text')!.reset();
   }
