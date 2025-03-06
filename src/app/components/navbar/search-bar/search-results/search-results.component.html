@@ -10,7 +10,7 @@
       }
     </ul>
     } @if(mangasDataList.length > 0) {
-    <ul class="flex flex-col text-white">
+    <ul class="flex flex-col text-white gap-1">
       <h2 class="cursor-default text-sm font-medium">Manga</h2>
       @for (manga of mangasDataList; track manga.mal_id) {
       <li>
@@ -19,7 +19,7 @@
       }
     </ul>
     } @if(charactersDataList.length > 0) {
-    <ul class="flex flex-col text-white">
+    <ul class="flex flex-col text-white gap-1">
       <h2 class="cursor-default text-sm font-medium">Characters</h2>
       @for (character of charactersDataList; track character.mal_id) {
       <li>
@@ -30,7 +30,7 @@
       }
     </ul>
     } @if(clubsDataList.length > 0) {
-    <ul class="flex flex-col text-white">
+    <ul class="flex flex-col text-white gap-1">
       <h2 class="cursor-default text-sm font-medium">Clubs</h2>
       @for (club of clubsDataList; track club.mal_id) {
       <li>
@@ -39,7 +39,7 @@
       }
     </ul>
     } @if(peoplesDataList.length > 0) {
-    <ul class="flex flex-col text-white">
+    <ul class="flex flex-col text-white gap-1">
       <h2 class="cursor-default text-sm font-medium">People</h2>
       @for (people of peoplesDataList; track people.mal_id) {
       <li>
@@ -48,7 +48,7 @@
       }
     </ul>
     } @if(usersDataList.length > 0) {
-    <ul class="flex flex-col text-white">
+    <ul class="flex flex-col text-white gap-1">
       <h2 class="cursor-default text-sm font-medium">Users</h2>
       @for (user of usersDataList; track user?.username || $index) {
       <li>

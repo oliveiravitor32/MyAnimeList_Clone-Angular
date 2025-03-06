@@ -9,4 +9,27 @@ import { IMangasResponseData } from '../../interfaces/mangas-reponse/mangas-resp
 })
 export class MangaListItemComponent {
   @Input({ required: true }) manga!: IMangasResponseData;
+
+  // Default image to use when manga image is missing
+  defaultImageUrl = 'assets/icons/question-icon.svg';
+
+  get imageUrl(): string {
+    return (
+      this.manga?.images?.webp?.image_url ||
+      this.manga?.images?.jpg?.image_url ||
+      this.defaultImageUrl
+    );
+  }
+
+  get mangaTitle(): string {
+    return this.manga?.title || 'Unknown Manga';
+  }
+
+  get mangaType(): string {
+    return this.manga?.type || 'N/A';
+  }
+
+  onItemSelected() {
+    // TODO
+  }
 }
