@@ -48,13 +48,17 @@
       </button>
     </form>
   </div>
-  @if(showResultsOnTextInputFocus && searchedData.length > 0 && searchedText ||
-  isSearching) {
+  @if(showResultsOnTextInputFocus && searchedText || isSearching) {
   <div class="absolute w-full">
     <app-search-results
       [searchedText]="searchedText"
-      [searchedData]="searchedData"
       [isSearching]="isSearching"
+      [animesDataList]="animesDataList"
+      [mangasDataList]="mangasDataList"
+      [charactersDataList]="charactersDataList"
+      [clubsDataList]="clubsDataList"
+      [peoplesDataList]="peoplesDataList"
+      [usersDataList]="usersDataList"
     ></app-search-results>
   </div>
   }

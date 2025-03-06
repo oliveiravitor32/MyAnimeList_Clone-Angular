@@ -1,55 +1,50 @@
-<div>
-  @if (!isSearching) {
-  <ul class="flex flex-col">
-    @for (data of searchedData; track $index) {
-    <li
-      class="group hover:h-24 hover:cursor-pointer bg-gray-light hover:bg-gray-extralight flex gap-2 text-xs font-light p-1"
-    >
-      <div class="relative w-14">
-        <img
-          class="object-cover"
-          [ngSrc]="data.images.webp.image_url"
-          [alt]="data.title"
-          fill="true"
-        />
-      </div>
-      <div class="text-white basis-full w-20">
-        <div class="group-hover:whitespace-normal truncate max-h-12">
-          <h3 class="font-bold text-xs inline">
-            {{ data.title }}
-          </h3>
-          <span class="hidden ml-px group-hover:inline text-xs font-normal"
-            >({{ data.type }})</span
-          >
-        </div>
-
-        <div class="group-hover:hidden">
-          <span>({{ data.type }}, {{ data.aired.prop.from.year }})</span>
-        </div>
-
-        <dl class="hidden group-hover:block">
-          <div class="flex">
-            <dt>Aired:&nbsp;</dt>
-            <dd>
-              {{ data.aired.from | utcDate }} to
-              {{ data.aired.to | utcDate }}
-            </dd>
-          </div>
-          <div class="flex">
-            <dt>Score:&nbsp;</dt>
-            <dd>{{ data.score }}</dd>
-          </div>
-          <div class="flex">
-            <dt>Status:&nbsp;</dt>
-            <dd>{{ data.status }}</dd>
-          </div>
-        </dl>
-      </div>
-    </li>
-    }
-  </ul>
-  }
-  <div class="rounded-b-md">
+<div class="bg-neutral-800">
+  <div class="p-1">
+    @if (!isSearching) { @if(animesDataList.length > 0) {
+    <ul class="flex flex-col text-white">
+      <h2>Animes</h2>
+      @for (anime of animesDataList; track anime.mal_id) {
+      <li></li>
+      }
+    </ul>
+    } @if(mangasDataList.length > 0) {
+    <ul class="flex flex-col text-white">
+      <h2>Manga</h2>
+      @for (manga of mangasDataList; track manga.mal_id) {
+      <li></li>
+      }
+    </ul>
+    } @if(charactersDataList.length > 0) {
+    <ul class="flex flex-col text-white">
+      <h2>Characters</h2>
+      @for (character of charactersDataList; track character.mal_id) {
+      <li></li>
+      }
+    </ul>
+    } @if(clubsDataList.length > 0) {
+    <ul class="flex flex-col text-white">
+      <h2>Clubs</h2>
+      @for (club of clubsDataList; track club.mal_id) {
+      <li></li>
+      }
+    </ul>
+    } @if(peoplesDataList.length > 0) {
+    <ul class="flex flex-col text-white">
+      <h2>People</h2>
+      @for (people of peoplesDataList; track people.mal_id) {
+      <li></li>
+      }
+    </ul>
+    } @if(usersDataList.length > 0) {
+    <ul class="flex flex-col text-white">
+      <h2>Users</h2>
+      @for (user of usersDataList; track user?.username || $index) {
+      <li></li>
+      }
+    </ul>
+    }}
+  </div>
+  <div class="relative rounded-b-md">
     <a
       class="rounded-b-md flex items-center gap-1 text-white bg-neutral-700 text-xs hover:cursor-pointer hover:text-black hover:bg-neutral-300 py-3 pl-2 h-full w-full"
       >View all results for <b>{{ searchedText }}</b>
