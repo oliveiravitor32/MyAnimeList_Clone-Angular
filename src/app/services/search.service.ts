@@ -8,7 +8,7 @@ import { IAnimesResponse } from '../interfaces/animes-response/animes-response.i
   providedIn: 'root',
 })
 export class SearchService {
-  API_URL = environment.apiUrl + '/anime';
+  API_URL = environment.apiUrl;
 
   constructor(private readonly _httpClient: HttpClient) {}
 
@@ -24,7 +24,7 @@ export class SearchService {
     });
 
     return this._httpClient
-      .get<IAnimesResponse>(`${this.API_URL}`, {
+      .get<IAnimesResponse>(`${this.API_URL}/anime`, {
         params,
       })
       .pipe(

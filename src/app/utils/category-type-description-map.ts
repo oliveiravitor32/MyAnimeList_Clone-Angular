@@ -7,11 +7,12 @@ export const categoryTypeDescriptionMap: { [key in CategoryTypeEnum]: string } =
     [CategoryTypeEnum.MANGA]: 'Manga',
     [CategoryTypeEnum.CHARACTERS]: 'Characters',
     [CategoryTypeEnum.PEOPLE]: 'People',
-    [CategoryTypeEnum.COMPANIES]: 'Companies',
-    [CategoryTypeEnum.MANGA_STORE]: 'Manga Store',
-    [CategoryTypeEnum.NEWS]: 'News',
-    [CategoryTypeEnum.FEATURED_ARTICLES]: 'Featured Articles',
-    [CategoryTypeEnum.FORUM]: 'Forum',
+    // NOT SUPPORTED END POINTS
+    // [CategoryTypeEnum.COMPANIES]: 'Companies',
+    // [CategoryTypeEnum.MANGA_STORE]: 'Manga Store',
+    // [CategoryTypeEnum.NEWS]: 'News',
+    // [CategoryTypeEnum.FEATURED_ARTICLES]: 'Featured Articles',
+    // [CategoryTypeEnum.FORUM]: 'Forum',
     [CategoryTypeEnum.CLUBS]: 'Clubs',
     [CategoryTypeEnum.USERS]: 'Users',
   };
