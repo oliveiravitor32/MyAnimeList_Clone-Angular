@@ -98,7 +98,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
             ?.value as CategoryTypeEnum;
 
           const additionalParams = new HttpParams()
-            .set('order_by', 'popularity')
             .set('page', '1')
             .set('limit', '10');
 

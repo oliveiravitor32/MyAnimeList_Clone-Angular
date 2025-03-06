@@ -16,7 +16,7 @@ export const convertCategoryToSearchMethodMap = (
   [CategoryTypeEnum.ANIME]: _searchService.getAnimesByName.bind(_searchService),
   [CategoryTypeEnum.MANGA]: _searchService.getMangasByName.bind(_searchService),
   [CategoryTypeEnum.CHARACTERS]:
-    _searchService.getAnimesByName.bind(_searchService),
+    _searchService.getCharactersByName.bind(_searchService),
   [CategoryTypeEnum.PEOPLE]:
     _searchService.getAnimesByName.bind(_searchService),
   // NOT SUPPORTED END POINTS

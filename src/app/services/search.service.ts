@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { catchError, Observable, throwError } from 'rxjs';
 import { environment } from '../environments/environment';
 import { IAnimesResponse } from '../interfaces/animes-response/animes-response.interface';
+import { ICharactersResponse } from '../interfaces/characters-response/characters-response.interface';
 import { IMangasResponse } from '../interfaces/mangas-reponse/mangas-response.interface';
 
 @Injectable({
@@ -54,6 +55,29 @@ export class SearchService {
       .pipe(
         catchError((error) => {
           console.error('Error fetching mangas:', error);
+          return throwError(error);
+        })
+      );
+  }
+
+  getCharactersByName(
+    name: string,
+    additionalParams: HttpParams
+  ): Observable<ICharactersResponse> {
+    let params = new HttpParams().set('q', name);
+
+    // Merge additionalParams into params
+    additionalParams.keys().forEach((key) => {
+      params = params.set(key, additionalParams.get(key)!);
+    });
+
+    return this._httpClient
+      .get<ICharactersResponse>(`${this.API_URL}/characters`, {
+        params,
+      })
+      .pipe(
+        catchError((error) => {
+          console.error('Error fetching characters:', error);
           return throwError(error);
         })
       );
