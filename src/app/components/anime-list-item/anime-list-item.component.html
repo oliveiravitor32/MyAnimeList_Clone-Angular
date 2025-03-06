@@ -1,1 +1,48 @@
-<div></div>
+<div
+  class="group hover:h-24 hover:cursor-pointer bg-gray-light hover:bg-gray-extralight flex gap-2 text-xs font-light"
+  tabindex="0"
+  role="button"
+  [attr.aria-label]="'View details for ' + animeTitle"
+  (click)="onItemSelected()"
+  (keydown.enter)="onItemSelected()"
+>
+  <div class="relative w-20">
+    <img
+      class="object-cover"
+      [ngSrc]="imageUrl"
+      [alt]="animeTitle"
+      fill="true"
+      loading="lazy"
+    />
+  </div>
+  <div class="text-white basis-full w-20">
+    <div class="group-hover:whitespace-normal truncate max-h-12">
+      <h3 class="font-bold text-xs inline">{{ animeTitle }}</h3>
+      <span class="hidden ml-px group-hover:inline text-xs font-normal">{{
+        animeType
+      }}</span>
+    </div>
+
+    <div class="group-hover:hidden">
+      <span>({{ animeType }}, {{ animeReleaseYear }})</span>
+    </div>
+
+    <dl class="hidden group-hover:block">
+      <div class="flex">
+        <dt>Aired:&nbsp;</dt>
+        <dd>
+          {{ anime.aired.from | utcDate }}
+          {{ anime.aired.to ? "to " + (anime.aired.to | utcDate) : "" }}
+        </dd>
+      </div>
+      <div class="flex">
+        <dt>Score:&nbsp;</dt>
+        <dd>{{ anime.score }}</dd>
+      </div>
+      <div class="flex">
+        <dt>Status:&nbsp;</dt>
+        <dd>{{ anime.status }}</dd>
+      </div>
+    </dl>
+  </div>
+</div>
