@@ -64,7 +64,10 @@ export class SearchService {
     name: string,
     additionalParams: HttpParams
   ): Observable<ICharactersResponse> {
-    let params = new HttpParams().set('q', name);
+    let params = new HttpParams()
+      .set('q', name)
+      .set('order_by', 'favorites')
+      .set('sort', 'desc');
 
     // Merge additionalParams into params
     additionalParams.keys().forEach((key) => {

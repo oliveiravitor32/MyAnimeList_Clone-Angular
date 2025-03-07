@@ -9,4 +9,25 @@ import { ICharactersResponseData } from '../../interfaces/characters-response/ch
 })
 export class CharacterListItemComponent {
   @Input({ required: true }) character!: ICharactersResponseData;
+
+  // Default image to use when character image is missing
+  defaultImageUrl = 'assets/icons/question-icon.svg';
+
+  get imageUrl(): string {
+    return (
+      this.character?.images?.webp?.image_url ||
+      this.character?.images?.jpg?.image_url ||
+      this.defaultImageUrl
+    );
+  }
+
+  get characterName(): string {
+    return (
+      this.character?.name || this.character.nicknames[0] || 'Unknown Character'
+    );
+  }
+
+  onItemSelected() {
+    // TODO
+  }
 }

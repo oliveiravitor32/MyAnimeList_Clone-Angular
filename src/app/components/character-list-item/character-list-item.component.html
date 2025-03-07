@@ -1,1 +1,29 @@
-<p>characters-list-item works!</p>
+<div
+  class="group min-h-8 hover:h-24 hover:cursor-pointer bg-gray-light hover:bg-gray-extralight flex text-xs font-light"
+  tabindex="0"
+  role="button"
+  [attr.aria-label]="'View details for ' + characterName"
+  (click)="onItemSelected()"
+  (keydown.enter)="onItemSelected()"
+>
+  <div class="relative w-20">
+    <img
+      class="object-cover"
+      [ngSrc]="imageUrl"
+      [alt]="characterName"
+      fill="true"
+      loading="lazy"
+    />
+  </div>
+  <div class="text-white basis-full w-20">
+    <div class="group-hover:whitespace-normal truncate max-h-12">
+      <h3 class="font-bold text-xs inline">{{ characterName }}</h3>
+    </div>
+    <dl class="hidden group-hover:block">
+      <div class="flex">
+        <dt>Favorites:&nbsp;</dt>
+        <dd>{{ character.favorites }}</dd>
+      </div>
+    </dl>
+  </div>
+</div>
