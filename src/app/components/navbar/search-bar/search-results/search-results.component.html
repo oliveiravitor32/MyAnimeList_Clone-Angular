@@ -1,62 +1,24 @@
 <div class="bg-neutral-800">
   <div class="p-1">
     @if (!isSearching) { @if(animesDataList.length > 0) {
-    <ul class="flex flex-col text-white gap-1">
-      <h2 class="cursor-default text-sm font-medium">Animes</h2>
-      @for (anime of animesDataList; track anime.mal_id) {
-      <li>
-        <app-anime-list-item [anime]="anime"></app-anime-list-item>
-      </li>
-      }
-    </ul>
+    <app-items-list title="Animes" [itemsDataList]="animesDataList">
+    </app-items-list>
     } @if(mangasDataList.length > 0) {
-    <ul class="flex flex-col text-white gap-1">
-      <h2 class="cursor-default text-sm font-medium">Manga</h2>
-      @for (manga of mangasDataList; track manga.mal_id) {
-      <li>
-        <app-manga-list-item [manga]="manga"></app-manga-list-item>
-      </li>
-      }
-    </ul>
+    <app-items-list title="Mangas" [itemsDataList]="mangasDataList">
+    </app-items-list>
     } @if(charactersDataList.length > 0) {
-    <ul class="flex flex-col text-white gap-1">
-      <h2 class="cursor-default text-sm font-medium">Characters</h2>
-      @for (character of charactersDataList; track character.mal_id) {
-      <li>
-        <app-character-list-item
-          [character]="character"
-        ></app-character-list-item>
-      </li>
-      }
-    </ul>
+    <app-items-list title="Characters" [itemsDataList]="charactersDataList">
+    </app-items-list>
     } @if(clubsDataList.length > 0) {
-    <ul class="flex flex-col text-white gap-1">
-      <h2 class="cursor-default text-sm font-medium">Clubs</h2>
-      @for (club of clubsDataList; track club.mal_id) {
-      <li>
-        <app-club-list-item [club]="club"></app-club-list-item>
-      </li>
-      }
-    </ul>
+    <app-items-list title="Clubs" [itemsDataList]="clubsDataList">
+    </app-items-list>
     } @if(peoplesDataList.length > 0) {
-    <ul class="flex flex-col text-white gap-1">
-      <h2 class="cursor-default text-sm font-medium">People</h2>
-      @for (people of peoplesDataList; track people.mal_id) {
-      <li>
-        <app-people-list-item [people]="people"></app-people-list-item>
-      </li>
-      }
-    </ul>
+    <app-items-list title="Peoples" [itemsDataList]="peoplesDataList">
+    </app-items-list>
     } @if(usersDataList.length > 0) {
-    <ul class="flex flex-col text-white gap-1">
-      <h2 class="cursor-default text-sm font-medium">Users</h2>
-      @for (user of usersDataList; track user?.username || $index) {
-      <li>
-        <app-user-list-item [user]="user"></app-user-list-item>
-      </li>
-      }
-    </ul>
-    }}
+    <app-items-list title="Users" [itemsDataList]="usersDataList">
+    </app-items-list>
+    } }
   </div>
   <div class="relative rounded-b-md">
     <a
