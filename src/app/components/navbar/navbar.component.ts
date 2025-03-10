@@ -76,8 +76,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
         distinctUntilChanged(), // Only emit if value is different from previous value
         pairwise(), // Emit the previous and current values as a tuple
         filter(([prevValue, currValue]) => {
-          console.log('moto');
-
           // Clears last request cache when user clears search bar
           if (
             currValue?.length === 0 &&

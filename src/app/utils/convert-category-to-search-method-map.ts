@@ -29,5 +29,5 @@ export const convertCategoryToSearchMethodMap = (
   //   _searchService.getAnimesByName.bind(_searchService),
   // [CategoryTypeEnum.FORUM]: _searchService.getAnimesByName.bind(_searchService),
   [CategoryTypeEnum.CLUBS]: _searchService.getClubsByName.bind(_searchService),
-  [CategoryTypeEnum.USERS]: _searchService.getAnimesByName.bind(_searchService),
+  [CategoryTypeEnum.USERS]: _searchService.getUsersByName.bind(_searchService),
 });

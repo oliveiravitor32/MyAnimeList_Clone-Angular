@@ -32,4 +32,8 @@ export class ItemsListComponent {
     // Fallback to index if no unique identifier exists
     return index;
   }
+
+  get visibleItems(): any[] {
+    return this.itemsDataList?.slice(0, 10) || [];
+  }
 }

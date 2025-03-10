@@ -3,7 +3,8 @@
     <h2 class="cursor-default text-sm font-medium mb-1.5 text-white">
       {{ title }}
     </h2>
-    @for (itemData of itemsDataList; track trackByItem($index, itemData)) {
+    @for (itemData of visibleItems | slice:0:10; track trackByItem($index,
+    itemData)) {
     <li>
       <app-list-item [item]="itemData"> </app-list-item>
     </li>

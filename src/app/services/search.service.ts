@@ -7,6 +7,7 @@ import { ICharactersResponse } from '../interfaces/characters-response/character
 import { IClubsResponse } from '../interfaces/clubs-response/clubs-response.interface';
 import { IMangasResponse } from '../interfaces/mangas-reponse/mangas-response.interface';
 import { IPeoplesResponse } from '../interfaces/peoples-response/peoples-response.interface';
+import { IUsersResponse } from '../interfaces/users-response/users-response.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -130,6 +131,29 @@ export class SearchService {
 
     return this._httpClient
       .get<IClubsResponse>(`${this.API_URL}/clubs`, {
+        params,
+      })
+      .pipe(
+        catchError((error) => {
+          console.error('Error fetching mangas:', error);
+          return throwError(error);
+        })
+      );
+  }
+
+  getUsersByName(
+    name: string,
+    additionalParams: HttpParams
+  ): Observable<IUsersResponse> {
+    let params = new HttpParams().set('q', name);
+
+    // Merge additionalParams into params
+    additionalParams.keys().forEach((key) => {
+      params = params.set(key, additionalParams.get(key)!);
+    });
+
+    return this._httpClient
+      .get<IUsersResponse>(`${this.API_URL}/users`, {
         params,
       })
       .pipe(

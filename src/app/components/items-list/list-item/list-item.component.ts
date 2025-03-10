@@ -59,12 +59,11 @@ export class ListItemComponent extends ListItemController implements OnInit {
     if (this.isPeople) {
       this.favorites = this.getPipeValue(this.item, 'itemFavorites');
       this.birthday = this.getPipeValue(this.item, 'itemBirthday');
+      return;
     }
 
-    console.log('out');
     this.isClubs = this.checkItemType(['club']);
     if (this.isClubs) {
-      console.log('inside');
       this.members_count = this.getPipeValue(this.item, 'itemMembers');
       this.typeOrCategory = this.getPipeValue(this.item, 'itemTypeOrCategory');
     }
