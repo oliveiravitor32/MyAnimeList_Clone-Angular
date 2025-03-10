@@ -47,7 +47,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   isSearching: boolean = false;
 
   searchForm = new FormGroup({
-    category: new FormControl(CategoryTypeEnum.ALL),
+    category: new FormControl(CategoryTypeEnum.ANIME),
     text: new FormControl('', Validators.required),
   });
 
@@ -125,10 +125,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
     const category = this.searchForm.get('category')?.value as CategoryTypeEnum;
     const responseData = results.data;
 
-    console.log(responseData);
-    console.log('category');
-    console.log(category);
-
     // Use a data dispatcher object instead of a switch statement
     const dataDispatcher = {
       [CategoryTypeEnum.ANIME]: () =>
@@ -143,11 +139,10 @@ export class NavbarComponent implements OnInit, OnDestroy {
         (this.peoplesDataList = responseData as PeoplesResponseDataList),
       [CategoryTypeEnum.USERS]: () =>
         (this.usersDataList = responseData as UsersResponseDataList),
-      [CategoryTypeEnum.ALL]: () => this.handleAllCategoryResults(responseData),
     };
 
     // Execute the appropriate handler or default to ALL
-    (dataDispatcher[category] || dataDispatcher[CategoryTypeEnum.ALL])();
+    dataDispatcher[category]();
   }
 
   handleAllCategoryResults(results: AllResponseDataList) {

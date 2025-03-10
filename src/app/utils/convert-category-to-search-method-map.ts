@@ -12,7 +12,6 @@ export const convertCategoryToSearchMethodMap = (
     params: HttpParams
   ) => Observable<IAllResponse>;
 } => ({
-  [CategoryTypeEnum.ALL]: _searchService.getAnimesByName.bind(_searchService),
   [CategoryTypeEnum.ANIME]: _searchService.getAnimesByName.bind(_searchService),
   [CategoryTypeEnum.MANGA]: _searchService.getMangasByName.bind(_searchService),
   [CategoryTypeEnum.CHARACTERS]:
@@ -20,6 +19,7 @@ export const convertCategoryToSearchMethodMap = (
   [CategoryTypeEnum.PEOPLE]:
     _searchService.getPeoplesByName.bind(_searchService),
   // NOT SUPPORTED END POINTS
+  //[CategoryTypeEnum.ALL]: _searchService.getAnimesByName.bind(_searchService),
   // [CategoryTypeEnum.COMPANIES]:
   //   _searchService.getAnimesByName.bind(_searchService),
   // [CategoryTypeEnum.MANGA_STORE]:
