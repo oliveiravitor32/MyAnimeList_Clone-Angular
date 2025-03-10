@@ -5,6 +5,7 @@ import { environment } from '../environments/environment';
 import { IAnimesResponse } from '../interfaces/animes-response/animes-response.interface';
 import { ICharactersResponse } from '../interfaces/characters-response/characters-response.interface';
 import { IMangasResponse } from '../interfaces/mangas-reponse/mangas-response.interface';
+import { IPeoplesResponse } from '../interfaces/peoples-response/peoples-response.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -81,6 +82,32 @@ export class SearchService {
       .pipe(
         catchError((error) => {
           console.error('Error fetching characters:', error);
+          return throwError(error);
+        })
+      );
+  }
+
+  getPeoplesByName(
+    name: string,
+    additionalParams: HttpParams
+  ): Observable<IPeoplesResponse> {
+    let params = new HttpParams()
+      .set('q', name)
+      .set('order_by', 'favorites')
+      .set('sort', 'desc');
+
+    // Merge additionalParams into params
+    additionalParams.keys().forEach((key) => {
+      params = params.set(key, additionalParams.get(key)!);
+    });
+
+    return this._httpClient
+      .get<IPeoplesResponse>(`${this.API_URL}/people`, {
+        params,
+      })
+      .pipe(
+        catchError((error) => {
+          console.error('Error fetching mangas:', error);
           return throwError(error);
         })
       );
