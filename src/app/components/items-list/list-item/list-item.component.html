@@ -2,60 +2,68 @@
   class="group max-h-24 hover:h-24 min-h-11 pb-1 hover:cursor-pointer bg-gray-light hover:bg-gray-extralight flex gap-2 text-xs font-light"
   tabindex="0"
   role="button"
-  attr.aria-label="'View details for ' + {{ item | itemTitle }}"
+  attr.aria-label="'View details for ' + {{ title }}"
   (click)="onItemSelected()"
   (keydown.enter)="onItemSelected()"
 >
   <div class="relative w-20">
     <img
       class="object-cover"
-      [ngSrc]="item | itemImage"
-      [alt]="item | itemTitle"
+      [ngSrc]="imageUrl"
+      [alt]="title"
       fill="true"
       loading="lazy"
     />
   </div>
   <div class="text-white basis-full w-20">
     <div class="group-hover:whitespace-normal truncate max-h-12">
-      <h3 class="font-bold text-xs inline">{{ item | itemTitle }}</h3>
-      @if(item | itemIsOneOf:["anime","manga"]) {
+      <h3 class="font-bold text-xs inline">{{ title }}</h3>
+      @if(isAnimeOrManga) {
       <span class="hidden ml-px group-hover:inline text-xs font-normal">{{
-        item | itemType
+        type
       }}</span>
       }
     </div>
 
-    @if(item | itemIsOneOf:["anime","manga"] ) {
+    @if(isAnimeOrManga) {
     <div class="group-hover:hidden">
-      <span>({{ item | itemType }}, {{ item | itemReleaseYear }})</span>
+      <span>({{ type }}, {{ releaseYear }})</span>
     </div>
     <dl class="hidden group-hover:block">
       <div class="flex">
         <dt>Aired:&nbsp;</dt>
-        <dd>{{ item | itemFormatDate }}</dd>
+        <dd>{{ formattedFullDate }}</dd>
       </div>
       <div class="flex">
         <dt>Score:&nbsp;</dt>
-        <dd>{{ item | itemScore }}</dd>
+        <dd>{{ score }}</dd>
       </div>
       <div class="flex">
         <dt>Status:&nbsp;</dt>
-        <dd>{{ item | itemStatus }}</dd>
+        <dd>{{ status }}</dd>
       </div>
     </dl>
-    } @if(item | itemIsOneOf:["character"] ) {
-
-    <!-- TODO: SET NICKNAMES -->
-    @for (nickname of item | itemNicknames | slice:0:4; track $index) {
+    } @if(isCharacter) { @for (nickname of nicknames | slice:0:4; track $index)
+    {
     <div class="hidden group-hover:block text-ellipsis">
       <span>- {{ nickname }}</span>
     </div>
     }
-
     <dl class="hidden group-hover:block leading-3">
       <div class="flex">
         <dt>Favorites:&nbsp;</dt>
-        <dd>{{ item | itemFavorites }}</dd>
+        <dd>{{ favorites }}</dd>
+      </div>
+    </dl>
+    } @if(isPeople) {
+    <dl class="hidden group-hover:block leading-3">
+      <div class="flex">
+        <dt>Birthday:&nbsp;</dt>
+        <dd>{{ birthday }}</dd>
+      </div>
+      <div class="flex">
+        <dt>Favorites:&nbsp;</dt>
+        <dd>{{ favorites }}</dd>
       </div>
     </dl>
     }

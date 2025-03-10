@@ -4,7 +4,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { UtcDatePipe } from '../pipes/utc-date.pipe';
 
-import { SharedPipesModule } from '../shared/shared-pipes/shared-pipes.module';
 import { BannerComponent } from './banner/banner.component';
 import { FooterModule } from './footer/footer.module';
 import { HeaderComponent } from './header/header.component';
@@ -33,7 +32,6 @@ import { SearchResultsComponent } from './navbar/search-bar/search-results/searc
     NgOptimizedImage,
     ReactiveFormsModule,
     FontAwesomeModule,
-    SharedPipesModule,
   ],
   providers: [DatePipe],
   exports: [HeaderComponent, BannerComponent, NavbarComponent],

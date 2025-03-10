@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { IAllResponseData } from '../../types/all-response-data';
 import { AllResponseDataList } from '../../types/all-response-data-list';
 
@@ -6,6 +6,7 @@ import { AllResponseDataList } from '../../types/all-response-data-list';
   selector: 'app-items-list',
   templateUrl: './items-list.component.html',
   styleUrl: './items-list.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ItemsListComponent {
   @Input({ required: true }) title = '';
