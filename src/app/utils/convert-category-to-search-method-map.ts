@@ -28,6 +28,6 @@ export const convertCategoryToSearchMethodMap = (
   // [CategoryTypeEnum.FEATURED_ARTICLES]:
   //   _searchService.getAnimesByName.bind(_searchService),
   // [CategoryTypeEnum.FORUM]: _searchService.getAnimesByName.bind(_searchService),
-  [CategoryTypeEnum.CLUBS]: _searchService.getAnimesByName.bind(_searchService),
+  [CategoryTypeEnum.CLUBS]: _searchService.getClubsByName.bind(_searchService),
   [CategoryTypeEnum.USERS]: _searchService.getAnimesByName.bind(_searchService),
 });

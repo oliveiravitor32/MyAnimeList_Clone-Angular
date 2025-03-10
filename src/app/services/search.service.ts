@@ -4,6 +4,7 @@ import { catchError, Observable, throwError } from 'rxjs';
 import { environment } from '../environments/environment';
 import { IAnimesResponse } from '../interfaces/animes-response/animes-response.interface';
 import { ICharactersResponse } from '../interfaces/characters-response/characters-response.interface';
+import { IClubsResponse } from '../interfaces/clubs-response/clubs-response.interface';
 import { IMangasResponse } from '../interfaces/mangas-reponse/mangas-response.interface';
 import { IPeoplesResponse } from '../interfaces/peoples-response/peoples-response.interface';
 
@@ -103,6 +104,32 @@ export class SearchService {
 
     return this._httpClient
       .get<IPeoplesResponse>(`${this.API_URL}/people`, {
+        params,
+      })
+      .pipe(
+        catchError((error) => {
+          console.error('Error fetching mangas:', error);
+          return throwError(error);
+        })
+      );
+  }
+
+  getClubsByName(
+    name: string,
+    additionalParams: HttpParams
+  ): Observable<IClubsResponse> {
+    let params = new HttpParams()
+      .set('q', name)
+      .set('order_by', 'members_count')
+      .set('sort', 'desc');
+
+    // Merge additionalParams into params
+    additionalParams.keys().forEach((key) => {
+      params = params.set(key, additionalParams.get(key)!);
+    });
+
+    return this._httpClient
+      .get<IClubsResponse>(`${this.API_URL}/clubs`, {
         params,
       })
       .pipe(

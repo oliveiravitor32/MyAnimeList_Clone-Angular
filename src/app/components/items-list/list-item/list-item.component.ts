@@ -20,26 +20,28 @@ export class ListItemComponent extends ListItemController implements OnInit {
   isAnimeOrManga = false;
   isCharacter = false;
   isPeople = false;
+  isClubs = false;
 
-  title: string = '';
+  titleOrName: string = '';
   nicknames: string[] = [];
   imageUrl: string = '';
-  type: string = '';
+  typeOrCategory: string = '';
   releaseYear: string = '';
   birthday: string = '';
   formattedFullDate: string = '';
+  members_count: string = '';
   score: string = '';
   favorites: string = '';
   status: string = '';
 
   ngOnInit(): void {
     // Compute values once per component instance
-    this.title = this.getPipeValue(this.item, 'itemTitle');
+    this.titleOrName = this.getPipeValue(this.item, 'itemTitleOrName');
     this.imageUrl = this.getPipeValue(this.item, 'itemImage');
 
     this.isAnimeOrManga = this.checkItemType(['anime', 'manga']);
     if (this.isAnimeOrManga) {
-      this.type = this.getPipeValue(this.item, 'itemType');
+      this.typeOrCategory = this.getPipeValue(this.item, 'itemTypeOrCategory');
       this.releaseYear = this.getPipeValue(this.item, 'itemReleaseYear');
       this.formattedFullDate = this.getPipeValue(this.item, 'itemFormatDate');
       this.status = this.getPipeValue(this.item, 'itemStatus');
@@ -57,6 +59,14 @@ export class ListItemComponent extends ListItemController implements OnInit {
     if (this.isPeople) {
       this.favorites = this.getPipeValue(this.item, 'itemFavorites');
       this.birthday = this.getPipeValue(this.item, 'itemBirthday');
+    }
+
+    console.log('out');
+    this.isClubs = this.checkItemType(['club']);
+    if (this.isClubs) {
+      console.log('inside');
+      this.members_count = this.getPipeValue(this.item, 'itemMembers');
+      this.typeOrCategory = this.getPipeValue(this.item, 'itemTypeOrCategory');
     }
   }
 

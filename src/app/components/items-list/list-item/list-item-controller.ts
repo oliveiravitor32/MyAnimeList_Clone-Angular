@@ -1,13 +1,14 @@
 export class ListItemController {
   // Map of pipe types to handler methods
   private readonly pipeHandlerMap: { [key: string]: (item: any) => any } = {
-    itemTitle: this.getTitleValue.bind(this),
+    itemTitleOrName: this.getTitleOrNameValue.bind(this),
     itemNicknames: this.getNicknamesValue.bind(this),
     itemImage: this.getImageValue.bind(this),
-    itemType: this.getTypeValue.bind(this),
+    itemTypeOrCategory: this.getTypeOrCategoryValue.bind(this),
     itemReleaseYear: this.getReleaseYearValue.bind(this),
     itemBirthday: this.getBirthdayValue.bind(this),
     itemFormatDate: this.getFormattedDateValue.bind(this),
+    itemMembers: this.getMembersValue.bind(this),
     itemScore: this.getScoreValue.bind(this),
     itemFavorites: this.getFavoritesValue.bind(this),
     itemStatus: this.getStatusValue.bind(this),
@@ -23,7 +24,7 @@ export class ListItemController {
   }
 
   // Implementation of individual property extractors
-  protected getTitleValue(item: any): string {
+  protected getTitleOrNameValue(item: any): string {
     return item?.title || item?.name || item?.username || 'Unknown';
   }
 
@@ -45,7 +46,7 @@ export class ListItemController {
     return item.image_url || item.picture || '/assets/images/placeholder.png';
   }
 
-  protected getTypeValue(item: any): string {
+  protected getTypeOrCategoryValue(item: any): string {
     if ('type' in item) return item.type || 'Unknown';
     if ('aired' in item) return 'Anime';
     if ('published' in item) return 'Manga';
@@ -53,6 +54,7 @@ export class ListItemController {
     if ('birthday' in item) return 'Person';
     if ('members' in item) return 'Club';
     if ('username' in item) return 'User';
+    if ('category' in item) return item.category || 'Unknown';
     return 'Unknown';
   }
 
@@ -96,6 +98,10 @@ export class ListItemController {
     }
 
     return fromStr;
+  }
+
+  protected getMembersValue(item: any): string {
+    return item.members ? item.members.toString() : 'N/A';
   }
 
   protected getScoreValue(item: any): string {
