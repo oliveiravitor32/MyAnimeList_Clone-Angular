@@ -1,5 +1,4 @@
 import {
-  AfterViewInit,
   Component,
   ElementRef,
   EventEmitter,
@@ -22,7 +21,7 @@ import { categoryTypeArray } from '../../../utils/category-type-description-map'
   templateUrl: './search-bar.component.html',
   styleUrl: './search-bar.component.css',
 })
-export class SearchBarComponent implements AfterViewInit {
+export class SearchBarComponent {
   @Input({ required: true }) searchForm!: FormGroup;
   @Input({ required: true }) isSearching: boolean = false;
 
@@ -51,18 +50,12 @@ export class SearchBarComponent implements AfterViewInit {
     return this.searchForm.get('text')?.value;
   }
 
-  ngAfterViewInit() {
-    this.watchInputTextFocusAndShowResults();
+  onSearchTextInputFocus() {
+    this.showResultsOnTextInputFocus = true;
   }
 
-  watchInputTextFocusAndShowResults() {
-    this.searchInput.nativeElement.addEventListener('focus', () => {
-      this.showResultsOnTextInputFocus = true;
-    });
-
-    this.searchInput.nativeElement.addEventListener('blur', () => {
-      this.showResultsOnTextInputFocus = false;
-    });
+  onSearchTextInputBlur() {
+    this.showResultsOnTextInputFocus = false;
   }
 
   clearSearch() {

@@ -6,18 +6,11 @@ import {
   debounceTime,
   distinctUntilChanged,
   filter,
-  pairwise,
   switchMap,
   take,
 } from 'rxjs/operators';
 import { IAllResponse } from '../../interfaces/all-response/all-response.interface';
-import { ICharactersResponseData } from '../../interfaces/characters-response/characters-response-data.interface';
-import { IClubsResponseData } from '../../interfaces/clubs-response/clubs-response-data.interface';
-import { IMangasResponseData } from '../../interfaces/mangas-reponse/mangas-response-data.interface';
-import { IPeoplesResponseData } from '../../interfaces/peoples-response/peoples-response-data.interface';
-import { IUsersResponseData } from '../../interfaces/users-response/users-response-data.interface';
 import { SearchService } from '../../services/search.service';
-import { AllResponseDataList } from '../../types/all-response-data-list';
 import { AnimesResponseDataList } from '../../types/animes-response-data-list';
 import { CharactersResponseDataList } from '../../types/characters-response-data-list';
 import { ClubsResponseDataList } from '../../types/clubs-response-data-list';
@@ -27,7 +20,6 @@ import { UsersResponseDataList } from '../../types/users-response-data-list';
 import { convertCategoryToSearchMethodMap } from '../../utils/convert-category-to-search-method-map';
 import { navbarLinkGroupsData } from '../../utils/navbar-link-groups-data';
 import { CategoryTypeEnum } from './../../enums/categoy-type.enum';
-import { IAnimesResponseData } from './../../interfaces/animes-response/animes-response-data.interface';
 
 @Component({
   selector: 'app-navbar',
@@ -59,8 +51,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.watchTextInputAndSearch();
-
-    this.searchForm.get('text')?.setValue('hunter');
   }
 
   watchTextInputAndSearch() {
@@ -74,20 +64,15 @@ export class NavbarComponent implements OnInit, OnDestroy {
       ?.valueChanges.pipe(
         debounceTime(300), // Wait for 300ms pause in events
         distinctUntilChanged(), // Only emit if value is different from previous value
-        pairwise(), // Emit the previous and current values as a tuple
-        filter(([prevValue, currValue]) => {
+        filter((value) => {
           // Clears last request cache when user clears search bar
-          if (
-            currValue?.length === 0 &&
-            prevValue?.length &&
-            prevValue.length > 0
-          ) {
+          if (value && value.length === 0) {
             this.clearData();
           }
 
-          return currValue !== null && currValue.trim().length > 0;
+          return value !== null && value.trim().length > 0;
         }),
-        switchMap(([prevQuery, currQuery]) => {
+        switchMap((value) => {
           // Set loading state to true when a new search is made
           this.isSearching = true;
 
@@ -95,12 +80,15 @@ export class NavbarComponent implements OnInit, OnDestroy {
           const category = this.searchForm.get('category')
             ?.value as CategoryTypeEnum;
 
-          const additionalParams = new HttpParams()
-            .set('page', '1')
-            .set('limit', '10');
+          let additionalParams: HttpParams = new HttpParams();
+
+          // Set additional params for pagination if the category is not USERS
+          if (category !== CategoryTypeEnum.USERS) {
+            additionalParams.set('page', '1').set('limit', '10');
+          }
 
           const searchMethod = categoryMethodMap[category];
-          return searchMethod(currQuery!, additionalParams).pipe(take(1));
+          return searchMethod(value!, additionalParams).pipe(take(1));
         }) // Cancel previous request if new request is made and take only the first response
       )
       .subscribe((results) => {
@@ -143,129 +131,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
     // Execute the appropriate handler or default to ALL
     dataDispatcher[category]();
-  }
-
-  handleAllCategoryResults(results: AllResponseDataList) {
-    if (!Array.isArray(results) || results.length === 0) {
-      return;
-    }
-
-    // Create arrays for batch processing (better performance than individual pushes)
-    const animes: AnimesResponseDataList = [];
-    const mangas: MangasResponseDataList = [];
-    const characters: CharactersResponseDataList = [];
-    const clubs: ClubsResponseDataList = [];
-    const peoples: PeoplesResponseDataList = [];
-    const users: UsersResponseDataList = [];
-
-    // Single pass through results - O(n) complexity
-    for (const item of results) {
-      // Fast type identification with property checks
-      // Order checks from most common to least common for performance
-      if (this.hasAnimeProperties(item)) {
-        animes.push(item as IAnimesResponseData);
-      } else if (this.hasMangaProperties(item)) {
-        mangas.push(item as IMangasResponseData);
-      } else if (this.hasCharacterProperties(item)) {
-        characters.push(item as ICharactersResponseData);
-      } else if (this.hasClubProperties(item)) {
-        clubs.push(item as IClubsResponseData);
-      } else if (this.hasPeopleProperties(item)) {
-        peoples.push(item as IPeoplesResponseData);
-      } else if (this.hasUserProperties(item)) {
-        users.push(item as IUsersResponseData);
-      }
-    }
-  }
-
-  /**
-   * Type guard for anime data
-   * @param item - Any object to check
-   * @returns Type assertion that item is IAnimesResponseData
-   */
-  private hasAnimeProperties(item: any): item is IAnimesResponseData {
-    return Boolean(
-      item &&
-        'type' in item &&
-        typeof item.type === 'string' &&
-        ['TV', 'Movie', 'OVA', 'Special', 'ONA', 'Music'].includes(item.type) &&
-        ('episodes' in item || 'aired' in item)
-    );
-  }
-
-  /**
-   * Type guard for manga data
-   * @param item - Any object to check
-   * @returns Type assertion that item is IMangasResponseData
-   */
-  private hasMangaProperties(item: any): item is IMangasResponseData {
-    return Boolean(
-      item &&
-        'type' in item &&
-        typeof item.type === 'string' &&
-        [
-          'Manga',
-          'Novel',
-          'Light Novel',
-          'One-shot',
-          'Doujinshi',
-          'Manhwa',
-          'Manhua',
-        ].includes(item.type) &&
-        ('chapters' in item || 'volumes' in item)
-    );
-  }
-
-  /**
-   * Type guard for character data
-   * @param item - Any object to check
-   * @returns Type assertion that item is ICharactersResponseData
-   */
-  private hasCharacterProperties(item: any): item is ICharactersResponseData {
-    return Boolean(
-      item &&
-        ('nicknames' in item || 'about' in item) &&
-        'name' in item &&
-        !('episodes' in item) &&
-        !('chapters' in item)
-    );
-  }
-
-  /**
-   * Type guard for club data
-   * @param item - Any object to check
-   * @returns Type assertion that item is IClubsResponseData
-   */
-  private hasClubProperties(item: any): item is IClubsResponseData {
-    return Boolean(
-      item && 'members' in item && 'category' in item && 'access' in item
-    );
-  }
-
-  /**
-   * Type guard for people data
-   * @param item - Any object to check
-   * @returns Type assertion that item is IPeoplesResponseData
-   */
-  private hasPeopleProperties(item: any): item is IPeoplesResponseData {
-    return Boolean(
-      item &&
-        ('birthday' in item || 'family_name' in item) &&
-        'favorites' in item &&
-        !('episodes' in item) &&
-        !('chapters' in item)
-    );
-  }
-
-  /**
-   * Type guard for user data
-   * @param item - Any object to check
-   * @returns Type assertion that item is IUsersResponseData
-   */
-  private hasUserProperties(item: any): item is IUsersResponseData {
-    return Boolean(
-      item && 'username' in item && !('mal_id' in item) && 'last_online' in item
-    );
   }
 
   clearData() {

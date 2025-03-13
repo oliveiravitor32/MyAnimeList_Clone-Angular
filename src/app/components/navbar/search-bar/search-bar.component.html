@@ -23,6 +23,8 @@
           id="search-bar-text-input"
           class="bg-gray-dark text-white text-xs w-52 lg:w-72 h-6 ml-0.5 px-1"
           type="text"
+          (focus)="onSearchTextInputFocus()"
+          (blur)="onSearchTextInputBlur()"
           placeholder="Search Anime, Manga, and more..."
           formControlName="text"
           aria-label="Search Anime, Manga, and more"

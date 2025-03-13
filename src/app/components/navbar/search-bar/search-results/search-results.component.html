@@ -1,22 +1,46 @@
 <div class="bg-neutral-800">
   <div class="p-1">
     @if (!isSearching) { @if(animesDataList.length > 0) {
-    <app-items-list title="Animes" [itemsDataList]="animesDataList">
+    <app-items-list
+      title="Animes"
+      [itemsDataList]="animesDataList"
+      [componentItemToRender]="AnimeListItemComponent"
+    >
     </app-items-list>
     } @if(mangasDataList.length > 0) {
-    <app-items-list title="Mangas" [itemsDataList]="mangasDataList">
+    <app-items-list
+      title="Mangas"
+      [itemsDataList]="mangasDataList"
+      [componentItemToRender]="MangaListItemComponent"
+    >
     </app-items-list>
     } @if(charactersDataList.length > 0) {
-    <app-items-list title="Characters" [itemsDataList]="charactersDataList">
+    <app-items-list
+      title="Characters"
+      [itemsDataList]="charactersDataList"
+      [componentItemToRender]="CharacterListItemComponent"
+    >
     </app-items-list>
     } @if(clubsDataList.length > 0) {
-    <app-items-list title="Clubs" [itemsDataList]="clubsDataList">
+    <app-items-list
+      title="Clubs"
+      [itemsDataList]="clubsDataList"
+      [componentItemToRender]="ClubListItemComponent"
+    >
     </app-items-list>
     } @if(peoplesDataList.length > 0) {
-    <app-items-list title="Peoples" [itemsDataList]="peoplesDataList">
+    <app-items-list
+      title="Peoples"
+      [itemsDataList]="peoplesDataList"
+      [componentItemToRender]="PeopleListItemComponent"
+    >
     </app-items-list>
     } @if(usersDataList.length > 0) {
-    <app-items-list title="Users" [itemsDataList]="usersDataList">
+    <app-items-list
+      title="Users"
+      [itemsDataList]="usersDataList"
+      [componentItemToRender]="UserListItemComponent"
+    >
     </app-items-list>
     } }
   </div>

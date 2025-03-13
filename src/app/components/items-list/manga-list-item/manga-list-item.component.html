@@ -1,0 +1,49 @@
+<div
+  class="group max-h-24 hover:h-24 min-h-11 pb-1 hover:cursor-pointer bg-gray-light hover:bg-gray-extralight flex gap-2 text-xs font-light"
+  tabindex="0"
+  role="button"
+  attr.aria-label="'View details for ' + {{ item.title || 'Unknown' }}"
+  (click)="onItemSelected()"
+  (keydown.enter)="onItemSelected()"
+>
+  <div class="relative w-20">
+    <img
+      class="object-cover"
+      [ngSrc]="item.images.webp.image_url || defaultImageUrl"
+      [alt]="item.title || 'Unknown'"
+      fill="true"
+      loading="lazy"
+    />
+  </div>
+  <div class="text-white basis-full w-20">
+    <div class="group-hover:whitespace-normal truncate max-h-12">
+      <h3 class="font-bold text-xs inline">
+        {{ item.title || "N/A" }}
+      </h3>
+
+      <span class="hidden ml-px group-hover:inline text-xs font-normal">{{
+        item.type || "N/A"
+      }}</span>
+    </div>
+    <div class="group-hover:hidden">
+      <span
+        >({{ item.type || "N/A" }},
+        {{ item.published.from | formatDate }})</span
+      >
+    </div>
+    <dl class="hidden group-hover:block">
+      <div class="flex">
+        <dt>Published:&nbsp;</dt>
+        <dd>{{ item.published.from | formatDate : item.published.to }}</dd>
+      </div>
+      <div class="flex">
+        <dt>Score:&nbsp;</dt>
+        <dd>{{ item.score || "N/A" }}</dd>
+      </div>
+      <div class="flex">
+        <dt>Status:&nbsp;</dt>
+        <dd>{{ item.status || "N/A" }}</dd>
+      </div>
+    </dl>
+  </div>
+</div>

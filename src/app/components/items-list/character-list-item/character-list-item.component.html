@@ -1,0 +1,37 @@
+<div
+  class="group max-h-24 hover:h-24 min-h-11 pb-1 hover:cursor-pointer bg-gray-light hover:bg-gray-extralight flex gap-2 text-xs font-light"
+  tabindex="0"
+  role="button"
+  attr.aria-label="'View details for ' + {{ item.name || 'Unknown' }}"
+  (click)="onItemSelected()"
+  (keydown.enter)="onItemSelected()"
+>
+  <div class="relative w-20">
+    <img
+      class="object-cover"
+      [ngSrc]="item.images.webp.image_url || defaultImageUrl"
+      [alt]="item.name || 'Unknown'"
+      fill="true"
+      loading="lazy"
+    />
+  </div>
+  <div class="text-white basis-full w-20">
+    <div class="group-hover:whitespace-normal truncate max-h-12">
+      <h3 class="font-bold text-xs inline">
+        {{ item.name || "N/A" }}
+      </h3>
+    </div>
+
+    @for (nickname of item.nicknames | slice:0:4; track $index) {
+    <div class="hidden group-hover:block text-ellipsis">
+      <span>- {{ nickname }}</span>
+    </div>
+    }
+    <dl class="hidden group-hover:block leading-3">
+      <div class="flex">
+        <dt>Favorites:&nbsp;</dt>
+        <dd>{{ item.favorites || "N/A" }}</dd>
+      </div>
+    </dl>
+  </div>
+</div>

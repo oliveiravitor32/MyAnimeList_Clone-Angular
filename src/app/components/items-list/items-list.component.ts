@@ -11,13 +11,9 @@ import { AllResponseDataList } from '../../types/all-response-data-list';
 export class ItemsListComponent {
   @Input({ required: true }) title = '';
   @Input({ required: true }) itemsDataList: AllResponseDataList = [];
+  @Input({ required: true }) componentItemToRender: any;
 
-  /**
-   * Custom trackBy function to optimize rendering performance
-   * @param index - The index of the current item
-   * @param item - The item in the array
-   * @returns A unique identifier for the item
-   */
+  // Custom trackBy function to optimize rendering performance
   trackByItem(index: number, item: IAllResponseData): any {
     // Try mal_id first (most data types)
     if (item && 'mal_id' in item) {
