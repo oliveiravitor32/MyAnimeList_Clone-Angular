@@ -14,10 +14,12 @@
   </button>
   @if (isOpen) {
   <ul
-    class="absolute flex flex-col text-nowrap gap-2 bg-gray-extralight text-white font-normal text-sm"
+    class="absolute flex flex-col text-nowrap bg-gray-extralight text-white font-normal text-sm"
   >
     @for (link of linkGroup.linksList; track $index) {
-    <li class="hover:bg-slate-200 hover:text-black px-2.5 py-2">
+    <li
+      class="hover:bg-slate-200 hover:cursor-pointer hover:text-black px-2.5 py-2"
+    >
       <a href="{{ link.path }}">{{ link.title }}</a>
     </li>
     }
