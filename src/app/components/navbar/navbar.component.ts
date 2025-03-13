@@ -3,6 +3,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import {
+  combineLatestWith,
   debounceTime,
   distinctUntilChanged,
   filter,
@@ -34,7 +35,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
   peoplesDataList: PeoplesResponseDataList = [];
   usersDataList: UsersResponseDataList = [];
 
-  searchSubscription: Subscription | null | undefined = null;
+  textInputSubscription: Subscription | null | undefined = null;
+  selectInputSubscription: Subscription | null | undefined = null;
 
   isSearching: boolean = false;
 
@@ -50,35 +52,36 @@ export class NavbarComponent implements OnInit, OnDestroy {
   constructor(private readonly _searchService: SearchService) {}
 
   ngOnInit(): void {
-    this.watchTextInputAndSearch();
+    this.watchInputsChangesAndSearch();
   }
 
-  watchTextInputAndSearch() {
+  private watchInputsChangesAndSearch() {
     // Use the util convert method to get the search method specific for each category
     const categoryMethodMap = convertCategoryToSearchMethodMap(
       this._searchService
     );
 
-    this.searchSubscription = this.searchForm
+    this.textInputSubscription = this.searchForm
       .get('text')
       ?.valueChanges.pipe(
-        debounceTime(300), // Wait for 300ms pause in events
+        combineLatestWith(this.searchForm.get('category')!.valueChanges), // Combine with category select input observable
+        debounceTime(300), // Wait for user to stop typing
         distinctUntilChanged(), // Only emit if value is different from previous value
-        filter((value) => {
+        filter(([textValue]) => {
           // Clears last request cache when user clears search bar
-          if (value && value.length === 0) {
+          if (textValue && textValue.length === 0) {
             this.clearData();
           }
 
-          return value !== null && value.trim().length > 0;
+          return textValue !== null && textValue.trim().length > 0;
         }),
-        switchMap((value) => {
+        // Cancel previous request if new request is made and take only the first response
+        switchMap(([textValue, categoryValue]) => {
           // Set loading state to true when a new search is made
           this.isSearching = true;
 
           // Get the correct category based on the select input value
-          const category = this.searchForm.get('category')
-            ?.value as CategoryTypeEnum;
+          const category = categoryValue as CategoryTypeEnum;
 
           let additionalParams: HttpParams = new HttpParams();
 
@@ -88,8 +91,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
           }
 
           const searchMethod = categoryMethodMap[category];
-          return searchMethod(value!, additionalParams).pipe(take(1));
-        }) // Cancel previous request if new request is made and take only the first response
+          return searchMethod(textValue!, additionalParams).pipe(take(1));
+        })
       )
       .subscribe({
         next: (results) => {
@@ -108,6 +111,10 @@ export class NavbarComponent implements OnInit, OnDestroy {
           this.isSearching = false;
         },
       });
+
+    // Set default search values to start the operator combineLatestWith
+    this.searchForm.get('text')?.setValue('');
+    this.searchForm.get('category')?.setValue(CategoryTypeEnum.ANIME);
   }
 
   onFormSubmit() {
@@ -151,8 +158,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     // Unsubscribe from the search subscription to avoid memory leaks
-    if (this.searchSubscription) {
-      this.searchSubscription.unsubscribe();
+    if (this.textInputSubscription) {
+      this.textInputSubscription.unsubscribe();
     }
   }
 }
