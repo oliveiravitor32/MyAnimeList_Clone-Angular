@@ -91,15 +91,22 @@ export class NavbarComponent implements OnInit, OnDestroy {
           return searchMethod(value!, additionalParams).pipe(take(1));
         }) // Cancel previous request if new request is made and take only the first response
       )
-      .subscribe((results) => {
-        // Clear previous data when a new search is completed
-        this.clearData();
+      .subscribe({
+        next: (results) => {
+          // Clear previous data when a new search is completed
+          this.clearData();
 
-        // Set loading state to false when a search is completed
-        this.isSearching = false;
+          // Set loading state to false when a search is completed
+          this.isSearching = false;
 
-        // Handle the search results putting the response data in the correct list
-        this.handleSearchResults(results);
+          // Handle the search results putting the response data in the correct list
+          this.handleSearchResults(results);
+        },
+        error: (error) => {
+          // When an error occurs clear all data and stop searching
+          this.clearData();
+          this.isSearching = false;
+        },
       });
   }
 

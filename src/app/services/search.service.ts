@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, Observable, throwError } from 'rxjs';
+import { catchError, Observable, of } from 'rxjs';
 import { environment } from '../environments/environment';
 import { IAnimesResponse } from '../interfaces/animes-response/animes-response.interface';
 import { ICharactersResponse } from '../interfaces/characters-response/characters-response.interface';
@@ -17,150 +17,106 @@ export class SearchService {
 
   constructor(private readonly _httpClient: HttpClient) {}
 
-  getAnimesByName(
-    name: string,
-    additionalParams: HttpParams
-  ): Observable<IAnimesResponse> {
-    let params = new HttpParams().set('q', name);
+  private fetchData<T extends { data: any[]; pagination: any }>(
+    endpoint: string,
+    query: string,
+    additionalParams: HttpParams = new HttpParams(),
+    defaultParams: HttpParams = new HttpParams()
+  ): Observable<T> {
+    // Start with query param
+    let params = new HttpParams().set('q', query);
 
-    // Merge additionalParams into params
+    // Add default params for this endpoint type
+    defaultParams.keys().forEach((key) => {
+      params = params.set(key, defaultParams.get(key)!);
+    });
+
+    // Add request-specific params (overrides defaults if same keys)
     additionalParams.keys().forEach((key) => {
       params = params.set(key, additionalParams.get(key)!);
     });
 
+    // Make the API call
     return this._httpClient
-      .get<IAnimesResponse>(`${this.API_URL}/anime`, {
-        params,
-      })
+      .get<T>(`${this.API_URL}/${endpoint}`, { params })
       .pipe(
         catchError((error) => {
-          console.error('Error fetching animes:', error);
-          return throwError(error);
+          console.error(`Error fetching ${endpoint}:`, error);
+          // Return empty result instead of throwing error
+          return of({
+            data: [],
+            pagination: {
+              items: { count: 0, total: 0, per_page: 0 },
+            },
+          } as unknown as T);
         })
       );
+  }
+
+  // Simplified endpoint methods
+  getAnimesByName(
+    name: string,
+    additionalParams: HttpParams = new HttpParams()
+  ): Observable<IAnimesResponse> {
+    return this.fetchData<IAnimesResponse>('anime', name, additionalParams);
   }
 
   getMangasByName(
     name: string,
-    additionalParams: HttpParams
+    additionalParams: HttpParams = new HttpParams()
   ): Observable<IMangasResponse> {
-    let params = new HttpParams().set('q', name);
-
-    // Merge additionalParams into params
-    additionalParams.keys().forEach((key) => {
-      params = params.set(key, additionalParams.get(key)!);
-    });
-
-    return this._httpClient
-      .get<IMangasResponse>(`${this.API_URL}/manga`, {
-        params,
-      })
-      .pipe(
-        catchError((error) => {
-          console.error('Error fetching mangas:', error);
-          return throwError(error);
-        })
-      );
+    return this.fetchData<IMangasResponse>('manga', name, additionalParams);
   }
 
   getCharactersByName(
     name: string,
-    additionalParams: HttpParams
+    additionalParams: HttpParams = new HttpParams()
   ): Observable<ICharactersResponse> {
-    let params = new HttpParams()
-      .set('q', name)
+    const defaultParams = new HttpParams()
       .set('order_by', 'favorites')
       .set('sort', 'desc');
-
-    // Merge additionalParams into params
-    additionalParams.keys().forEach((key) => {
-      params = params.set(key, additionalParams.get(key)!);
-    });
-
-    return this._httpClient
-      .get<ICharactersResponse>(`${this.API_URL}/characters`, {
-        params,
-      })
-      .pipe(
-        catchError((error) => {
-          console.error('Error fetching characters:', error);
-          return throwError(error);
-        })
-      );
+    return this.fetchData<ICharactersResponse>(
+      'characters',
+      name,
+      additionalParams,
+      defaultParams
+    );
   }
 
   getPeoplesByName(
     name: string,
-    additionalParams: HttpParams
+    additionalParams: HttpParams = new HttpParams()
   ): Observable<IPeoplesResponse> {
-    let params = new HttpParams()
-      .set('q', name)
+    const defaultParams = new HttpParams()
       .set('order_by', 'favorites')
       .set('sort', 'desc');
-
-    // Merge additionalParams into params
-    additionalParams.keys().forEach((key) => {
-      params = params.set(key, additionalParams.get(key)!);
-    });
-
-    return this._httpClient
-      .get<IPeoplesResponse>(`${this.API_URL}/people`, {
-        params,
-      })
-      .pipe(
-        catchError((error) => {
-          console.error('Error fetching mangas:', error);
-          return throwError(error);
-        })
-      );
+    return this.fetchData<IPeoplesResponse>(
+      'people',
+      name,
+      additionalParams,
+      defaultParams
+    );
   }
 
   getClubsByName(
     name: string,
-    additionalParams: HttpParams
+    additionalParams: HttpParams = new HttpParams()
   ): Observable<IClubsResponse> {
-    let params = new HttpParams()
-      .set('q', name)
+    const defaultParams = new HttpParams()
       .set('order_by', 'members_count')
       .set('sort', 'desc');
-
-    // Merge additionalParams into params
-    additionalParams.keys().forEach((key) => {
-      params = params.set(key, additionalParams.get(key)!);
-    });
-
-    return this._httpClient
-      .get<IClubsResponse>(`${this.API_URL}/clubs`, {
-        params,
-      })
-      .pipe(
-        catchError((error) => {
-          console.error('Error fetching mangas:', error);
-          return throwError(error);
-        })
-      );
+    return this.fetchData<IClubsResponse>(
+      'clubs',
+      name,
+      additionalParams,
+      defaultParams
+    );
   }
 
   getUsersByName(
     name: string,
-    additionalParams: HttpParams
+    additionalParams: HttpParams = new HttpParams()
   ): Observable<IUsersResponse> {
-    let params = new HttpParams().set('q', name);
-
-    // Merge additionalParams into params
-    additionalParams.keys().forEach((key) => {
-      params = params.set(key, additionalParams.get(key)!);
-    });
-
-    return this._httpClient
-      .get<IUsersResponse>(`${this.API_URL}/users`, {
-        params,
-      })
-      .pipe(
-        catchError((error) => {
-          console.error('Error fetching mangas:', error);
-          return throwError(error);
-        })
-      );
+    return this.fetchData<IUsersResponse>('users', name, additionalParams);
   }
 }
