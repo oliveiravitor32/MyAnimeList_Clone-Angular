@@ -2,6 +2,7 @@ import {
   Component,
   ElementRef,
   EventEmitter,
+  HostListener,
   Input,
   Output,
   ViewChild,
@@ -22,6 +23,13 @@ import { categoryTypeArray } from '../../../utils/category-type-description-map'
   styleUrl: './search-bar.component.css',
 })
 export class SearchBarComponent {
+  // Close input on escape key press
+  @HostListener('document:keydown.escape')
+  closeOnEscape(): void {
+    this.closeSearchBar();
+    this.searchInputEl?.nativeElement?.blur();
+  }
+
   @Input({ required: true }) searchForm!: FormGroup;
   @Input({ required: true }) isSearching: boolean = false;
 
@@ -35,12 +43,17 @@ export class SearchBarComponent {
 
   @Output('onFormSubmit') onFormSubmitEmitt = new EventEmitter<void>();
 
-  @ViewChild('searchTextInput') searchInput!: ElementRef<HTMLInputElement>;
+  @ViewChild('searchTextInput') searchInputEl!: ElementRef<HTMLInputElement>;
 
   searchIcon = faMagnifyingGlass;
   closeIcon = faTimes;
 
   showResultsOnTextInputFocus = false;
+  isSearchBarOpen: boolean = false;
+
+  closeSearchBar() {
+    this.isSearchBarOpen = false;
+  }
 
   get categoryTypeArray() {
     return categoryTypeArray;
@@ -51,7 +64,7 @@ export class SearchBarComponent {
   }
 
   onSearchTextInputFocus() {
-    this.showResultsOnTextInputFocus = true;
+    this.isSearchBarOpen = true;
   }
 
   onSearchTextInputBlur() {

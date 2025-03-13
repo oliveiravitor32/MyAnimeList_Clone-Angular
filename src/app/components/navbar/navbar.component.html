@@ -1,5 +1,5 @@
-<nav class="hidden md:flex justify-between bg-blue-dark pr-1.5 lg:pr-2.5">
-  <ul class="flex">
+<nav class="hidden md:flex justify-between bg-blue-dark">
+  <ul class="flex z-10 bg-inherit w-full">
     @for (linkGroup of linkGroupsList; track $index) {
     <li>
       <app-dropdown-link [linkGroup]="linkGroup"></app-dropdown-link>
@@ -7,6 +7,7 @@
     }
   </ul>
   <app-search-bar
+    class="bg-inherit"
     (onFormSubmit)="onFormSubmit()"
     [searchForm]="searchForm"
     [isSearching]="isSearching"

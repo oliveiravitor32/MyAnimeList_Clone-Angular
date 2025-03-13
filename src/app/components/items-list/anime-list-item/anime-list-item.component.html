@@ -1,5 +1,5 @@
 <div
-  class="group max-h-24 hover:h-24 min-h-11 pb-1 hover:cursor-pointer bg-gray-light hover:bg-gray-extralight flex gap-2 text-xs font-light"
+  class="group max-h-24 hover:h-24 focus-within:h-24 min-h-11 pb-1 hover:cursor-pointer bg-gray-light hover:bg-gray-extralight focus-within:bg-gray-extralight flex gap-2 text-xs font-light"
   tabindex="0"
   role="button"
   attr.aria-label="'View details for ' + {{ item.title || 'Unknown' }}"
@@ -16,20 +16,23 @@
     />
   </div>
   <div class="text-white basis-full w-20">
-    <div class="group-hover:whitespace-normal truncate max-h-12">
+    <div
+      class="group-hover:whitespace-normal group-focus-within:whitespace-normal truncate max-h-12"
+    >
       <h3 class="font-bold text-xs inline">
         {{ item.title || "N/A" }}
       </h3>
-      <span class="hidden ml-px group-hover:inline text-xs font-normal">{{
-        item.type || "N/A"
-      }}</span>
+      <span
+        class="hidden ml-px group-hover:inline group-focus-within:inline text-xs font-normal"
+        >{{ item.type || "N/A" }}</span
+      >
     </div>
-    <div class="group-hover:hidden">
+    <div class="group-hover:hidden group-focus-within:hidden">
       <span
         >({{ item.type || "N/A" }}, {{ item.aired.from | formatDate }})</span
       >
     </div>
-    <dl class="hidden group-hover:block">
+    <dl class="hidden group-hover:block group-focus-within:block">
       <div class="flex">
         <dt>Aired:&nbsp;</dt>
         <dd>{{ item.aired.from | formatDate : item.aired.to }}</dd>
