@@ -1,7 +1,7 @@
 import { HttpParams } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import {
   combineLatestWith,
   debounceTime,
@@ -11,6 +11,7 @@ import {
   take,
 } from 'rxjs/operators';
 import { IAllResponse } from '../../interfaces/all-response/all-response.interface';
+import { ResponsiveMenuService } from '../../services/responsive-menu.service';
 import { SearchService } from '../../services/search.service';
 import { AnimesResponseDataList } from '../../types/animes-response-data-list';
 import { CharactersResponseDataList } from '../../types/characters-response-data-list';
@@ -38,6 +39,9 @@ export class NavbarComponent implements OnInit, OnDestroy {
   textInputSubscription: Subscription | null | undefined = null;
   selectInputSubscription: Subscription | null | undefined = null;
 
+  isDropdownLinksOpen$: Observable<boolean> | null = null;
+  isSearchBarOpen$: Observable<boolean> | null = null;
+
   isSearching: boolean = false;
 
   searchForm = new FormGroup({
@@ -45,11 +49,32 @@ export class NavbarComponent implements OnInit, OnDestroy {
     text: new FormControl('', Validators.required),
   });
 
+  isDropdownLinkOpen: boolean = true;
+  isSearchBarOpen: boolean = true;
+
+  // Clean property for template usage of signals
+  get isSearchBarVisible(): boolean {
+    return (
+      this._reponsiveMenuService.isSearchBarOpen() ||
+      this._reponsiveMenuService.isDesktopView()
+    );
+  }
+
+  get isDropdownLinksVisible(): boolean {
+    return (
+      this._reponsiveMenuService.isDropdownLinksOpen() ||
+      this._reponsiveMenuService.isDesktopView()
+    );
+  }
+
   get linkGroupsList() {
     return navbarLinkGroupsData;
   }
 
-  constructor(private readonly _searchService: SearchService) {}
+  constructor(
+    private readonly _searchService: SearchService,
+    public readonly _reponsiveMenuService: ResponsiveMenuService
+  ) {}
 
   ngOnInit(): void {
     this.watchInputsChangesAndSearch();

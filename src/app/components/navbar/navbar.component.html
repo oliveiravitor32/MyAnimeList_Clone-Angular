@@ -1,13 +1,16 @@
-<nav class="hidden md:flex justify-between bg-blue-dark">
-  <ul class="flex z-10 bg-inherit w-full">
+<nav class="flex flex-col md:flex-row justify-between bg-blue-dark">
+  @if(isDropdownLinksVisible) {
+  <ul
+    class="flex flex-col md:flex-row z-10 w-full overflow-y-auto md:overflow-visible pb-20 md:pb-0 h-screen md:h-auto"
+  >
     @for (linkGroup of linkGroupsList; track $index) {
     <li>
       <app-dropdown-link [linkGroup]="linkGroup"></app-dropdown-link>
     </li>
     }
   </ul>
+  } @if (isSearchBarVisible) {
   <app-search-bar
-    class="bg-inherit"
     (onFormSubmit)="onFormSubmit()"
     [searchForm]="searchForm"
     [isSearching]="isSearching"
@@ -18,4 +21,5 @@
     [peoplesDataList]="peoplesDataList"
     [usersDataList]="usersDataList"
   ></app-search-bar>
+  }
 </nav>

@@ -1,5 +1,6 @@
-import { Component, Input } from '@angular/core';
+import { Component, effect, Input } from '@angular/core';
 import { INavbarLinkGroup } from '../../../interfaces/navbar-links/navbar-link-group.interface';
+import { ResponsiveMenuService } from '../../../services/responsive-menu.service';
 
 @Component({
   selector: 'app-dropdown-link',
@@ -14,11 +15,29 @@ export class DropdownLinkComponent {
 
   isOpen = false;
 
+  constructor(private readonly _responsiveMenuService: ResponsiveMenuService) {
+    // Use effect to react on view changes and close dropdown links
+    effect(() => {
+      // This will run whenever isDesktopView signal updates
+      _responsiveMenuService.isDesktopView();
+      // Close dropdown when media query changes
+      this.isOpen = false;
+    });
+  }
+
+  get isDesktopView(): boolean {
+    return this._responsiveMenuService.isDesktopView();
+  }
+
   openDropdown() {
     this.isOpen = true;
   }
 
   closeDropdown() {
     this.isOpen = false;
+  }
+
+  toggleDropdown() {
+    this.isOpen = !this.isOpen;
   }
 }

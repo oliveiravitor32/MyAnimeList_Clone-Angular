@@ -1,5 +1,5 @@
 <header
-  class="text-white flex flex-row justify-between items-center px-1 sm:px-2 lg:px-0"
+  class="flex w-full max-w-6xl text-white flex-row justify-between items-center px-1 sm:px-2 lg:px-0"
 >
   <div class="flex lg:basis-7/12 justify-between items-center">
     <a href="" class="font-bold text-3xl hidden md:block">MyAnimeList</a>
@@ -34,10 +34,14 @@
     >
       Sign Up
     </button>
-    <button class="md:hidden" aria-label="Search">
+    <button class="md:hidden" aria-label="Search" (click)="toggleSearchBar()">
       <fa-icon [icon]="searchIcon" class="text-xl ml-3"></fa-icon>
     </button>
-    <button class="md:hidden" aria-label="Open Menu">
+    <button
+      class="md:hidden"
+      aria-label="Open Menu"
+      (click)="toggleDropdownLinks()"
+    >
       <fa-icon [icon]="hamburgerMenuIcon" class="text-2xl ml-3"></fa-icon>
     </button>
   </div>

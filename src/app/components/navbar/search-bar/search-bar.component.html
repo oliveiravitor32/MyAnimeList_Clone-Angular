@@ -5,7 +5,7 @@
     aria-label="Search results overlay"
     (click)="closeSearchBar()"
     [class]="isSearchBarOpen ? 'block' : 'hidden'"
-    class="h-screen w-screen fixed inset-0 bg-neutral-800 opacity-25"
+    class="h-screen w-screen inset-0 fixed bg-neutral-800 opacity-25"
     tabindex="-1"
   >
     <!-- Trap focus inside modal when open -->
@@ -13,15 +13,21 @@
       >You are now in a search overlay. Press Escape to close.</span
     >
   </div>
-  <section class="h-full relative z-10 bg-inherit pr-1.5 lg:pr-2.5">
-    <div class="h-full flex items-center">
-      <form class="flex" [formGroup]="searchForm" (ngSubmit)="onSubmit()">
+  <section
+    class="h-full w-full md:block relative z-10 bg-inherit pr-1.5 lg:pr-2.5"
+  >
+    <div class="h-full pl-2 w-full flex items-center">
+      <form
+        class="flex w-full py-1 md:py-0"
+        [formGroup]="searchForm"
+        (ngSubmit)="onSubmit()"
+      >
         <label for="search-bar-select-input" class="sr-only"
           >Select Category</label
         >
         <select
           id="search-bar-select-input"
-          class="bg-gray-dark text-white rounded-s h-6 text-xs px-1 w-20"
+          class="bg-gray-dark text-white rounded-s h-8 md:h-6 text-xs px-1 w-20"
           aria-label="Select Category"
           formControlName="category"
         >
@@ -31,12 +37,12 @@
           </option>
           }
         </select>
-        <div class="relative flex items-center">
+        <div class="relative flex flex-1 items-center">
           <label for="search-bar-text-input" class="sr-only">Search</label>
           <input
             #searchTextInput
-            id="search-bar-text-input"
-            class="bg-gray-dark text-white text-xs w-52 lg:w-72 h-6 ml-0.5 px-1"
+            id="search-bar-text-input "
+            class="bg-gray-dark flex-1 h-8 md:h-6 text-white text-xs w-52 lg:w-72 ml-0.5 px-1.5"
             type="text"
             autocomplete="off"
             (focus)="onSearchTextInputFocus()"
@@ -57,17 +63,19 @@
           }
         </div>
         <button
-          class="flex items-center justify-center bg-gray-light px-1.5 h-6 rounded-e text-white disabled:text-gray-extralight"
+          class="flex items-center h-8 md:h-6 justify-center bg-gray-light px-2 md:px-1.5 rounded-e text-white disabled:text-gray-extralight"
           aria-label="Search"
           type="submit"
           [disabled]="!searchForm.valid"
         >
-          <fa-icon [icon]="searchIcon" class="text-inherit text-xs"></fa-icon>
+          <fa-icon [icon]="searchIcon" class="text-inherit text-sm"></fa-icon>
         </button>
       </form>
     </div>
     @if(isSearchBarOpen && searchedText || isSearching) {
-    <div class="absolute w-full">
+    <div
+      class="absolute w-full z-0 overflow-y-auto md:overflow-visible pb-24 md:pb-0 h-screen md:h-auto"
+    >
       <app-search-results
         [searchedText]="searchedText"
         [isSearching]="isSearching"
