@@ -1,12 +1,12 @@
 <div>
   <section
-    class="relative h-auto block bg-transparent"
+    class="relative h-auto bg-transparent"
     (mouseenter)="isDesktopView && openDropdown()"
     (mouseleave)="isDesktopView && closeDropdown()"
     (click)="!isDesktopView && toggleDropdown()"
   >
     <button
-      class="text-white text-start w-full md:w-auto hover:cursor-pointer md:hover:cursor-default hover:bg-blue-default md:hover:bg-gray-extralight px-1.5 lg:px-2.5 py-1 font-medium"
+      class="text-white text-sm font-semibold text-start w-full md:w-auto hover:cursor-pointer md:hover:cursor-default hover:bg-blue-default md:hover:bg-gray-extralight px-1.5 lg:px-2.5 py-1.5"
       type="button"
       [class]="[
         isOpen && isDesktopView ? 'bg-gray-extralight' : '',
@@ -19,7 +19,7 @@
     </button>
     @if (isOpen) {
     <ul
-      class="md:absolute flex flex-col text-nowrap bg-gray-extralight text-white font-normal text-sm"
+      class="md:absolute text-xs flex flex-col text-nowrap bg-gray-extralight text-white font-normal"
     >
       @for (link of linkGroup.linksList; track $index) {
       <li
