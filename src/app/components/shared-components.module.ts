@@ -14,7 +14,7 @@ import { ItemsListComponent } from './items-list/items-list.component';
 import { MangaListItemComponent } from './items-list/manga-list-item/manga-list-item.component';
 import { PeopleListItemComponent } from './items-list/people-list-item/people-list-item.component';
 import { UserListItemComponent } from './items-list/user-list-item/user-list-item.component';
-import { DropdownLinkComponent } from './navbar/dropdown-link/dropdown-link.component';
+import { DropdownLinkGroupComponent } from './navbar/dropdown-link-group/dropdown-link-group.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { SearchBarComponent } from './navbar/search-bar/search-bar.component';
 import { SearchResultsComponent } from './navbar/search-bar/search-results/search-results.component';
@@ -24,7 +24,7 @@ import { SearchResultsComponent } from './navbar/search-bar/search-results/searc
     HeaderComponent,
     BannerComponent,
     NavbarComponent,
-    DropdownLinkComponent,
+    DropdownLinkGroupComponent,
     SearchBarComponent,
     SearchResultsComponent,
     ItemsListComponent,

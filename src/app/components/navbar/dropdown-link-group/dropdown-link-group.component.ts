@@ -4,10 +4,10 @@ import { ResponsiveMenuService } from '../../../services/responsive-menu.service
 
 @Component({
   selector: 'app-dropdown-link',
-  templateUrl: './dropdown-link.component.html',
-  styleUrl: './dropdown-link.component.css',
+  templateUrl: './dropdown-link-group.component.html',
+  styleUrl: './dropdown-link-group.component.css',
 })
-export class DropdownLinkComponent {
+export class DropdownLinkGroupComponent {
   @Input({ required: true }) linkGroup: INavbarLinkGroup = {
     title: '',
     linksList: [],
