@@ -1,0 +1,51 @@
+<div class="w-[300px]">
+  <section class="bg-gray-default">
+    <h2
+      class="flex justify-between text-neutral-200 text-sm font-bold bg-gray-extralight px-1.5 pb-1 pt-2"
+    >
+      {{ title }}
+      <a
+        class="text-blue-extralight hover:underline hover:cursor-pointer text-xs"
+        >More</a
+      >
+    </h2>
+    <ul class="flex flex-col py-5 gap-4 pr-1">
+      @for (data of dataList; track data.mal_id) {
+      <li
+        class="flex gap-1.5"
+        [attr.aria-label]="
+          'Rank ' + ($index + 1) + ': ' + (data.title || 'Unknown')
+        "
+      >
+        <span class="max-w-6 text-neutral-200 font-bold px-2">{{
+          $index + 1
+        }}</span>
+        <a href="#" class="min-w-14">
+          <img
+            class="border-2 border-gray-extralight h-[70px] w-[50px]"
+            [ngSrc]="data.images.webp.image_url || defaultImageUrl"
+            [alt]="data.title || 'Unknown'"
+            height="70"
+            width="50"
+            loading="lazy"
+          />
+        </a>
+        <div class="text-white">
+          <div class="max-h-12">
+            <a
+              class="font-bold text-xs text-blue-extralight hover:underline hover:cursor-pointer leading-tight inline-block line-clamp-2"
+            >
+              {{ data.title || "Unknown" }}
+            </a>
+          </div>
+          <p class="text-xs font-gray-light">
+            {{ data.type || "N/A" }}, {{ data.episodes || "0" }} eps, scored
+            {{ data.score || "N/A" }}, <br />
+            {{ data.members ? (data.members | number) : "N/A" }} members
+          </p>
+        </div>
+      </li>
+      }
+    </ul>
+  </section>
+</div>

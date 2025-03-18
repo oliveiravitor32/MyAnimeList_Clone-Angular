@@ -1,13 +1,28 @@
 <div class="w-full">
-  <main class="w-full h-full border-x-2 border-gray-extralight">
+  <main class="w-full h-full border-x-2 border-b-2 border-gray-extralight">
     <h1
-      class="text-gray-200 border-b-2 border-gray-extralight font-semibold bg-gray-light px-2 py-1"
+      class="text-gray-200 border-b-2 border-gray-extralight text-lg font-bold bg-gray-light p-3 py-1"
     >
       Welcome to MyAnimeList-clone!
     </h1>
-    <div class="flex px-2 py-3">
-      <section><app-post-showcase></app-post-showcase></section>
-      <aside></aside>
+    <div class="flex py-3">
+      <section class="w-[740px] border-r-2 border-gray-extralight px-2">
+        <app-post-showcase></app-post-showcase>
+      </section>
+      <aside class="w-[320px] flex flex-col px-2">
+        <app-anime-leaderboard
+          title="Top Airing Anime"
+          [dataList]="topAiringAnimes"
+        ></app-anime-leaderboard>
+        <app-anime-leaderboard
+          title="Top Upcoming Anime"
+          [dataList]="topUpcomingAnimes"
+        ></app-anime-leaderboard>
+        <app-anime-leaderboard
+          title="Most Popular Anime"
+          [dataList]="mostPopularAnimes"
+        ></app-anime-leaderboard>
+      </aside>
     </div>
   </main>
 </div>
