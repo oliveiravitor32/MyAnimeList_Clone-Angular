@@ -25,7 +25,7 @@ This project is a clone of MyAnimeList, developed using Angular. It allows users
 
 ### 🛠️ Technologies Used
 
-- **Angular**: Frontend framework
+- **Angular v17.3.12**: Frontend framework
 - **TypeScript**: Programming language
 - **HTML/CSS**: Markup and styling
 - **RxJS**: Reactive programming library
@@ -94,7 +94,7 @@ Este projeto é um clone do MyAnimeList, desenvolvido usando Angular. Ele permit
 
 ### 🛠️ Tecnologias Utilizadas
 
-- **Angular**: Framework de frontend
+- **Angular v17.3.12**: Framework de frontend
 - **TypeScript**: Linguagem de programação
 - **HTML/CSS**: Marcação e estilização
 - **RxJS**: Biblioteca de programação reativa
