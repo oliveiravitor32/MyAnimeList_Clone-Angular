@@ -1,1 +1,14 @@
-<p>banner works!</p>
+<div class="w-full flex justify-center items-center">
+  <a
+    href="#"
+    class="relative w-full h-64"
+    [attr.aria-label]="bannerAlt || 'Promotional banner'"
+  >
+    <img
+      ngSrc="https://myanimelist.net/c/img/resources/pda/AF_20250316_PDA/PDA_PC_top.png"
+      [alt]="bannerAlt"
+      fill
+      priority
+    />
+  </a>
+</div>

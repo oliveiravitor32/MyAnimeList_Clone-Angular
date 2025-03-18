@@ -3,8 +3,10 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-banner',
   templateUrl: './banner.component.html',
-  styleUrl: './banner.component.css'
+  styleUrl: './banner.component.css',
 })
 export class BannerComponent {
-
+  get bannerAlt() {
+    return 'Event Announcement Chainsaw Man Draw 03 2025';
+  }
 }
