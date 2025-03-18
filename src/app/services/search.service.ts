@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, Observable, of } from 'rxjs';
+import { catchError, Observable, of, take } from 'rxjs';
 import { environment } from '../environments/environment';
 import { IAnimesResponse } from '../interfaces/animes-response/animes-response.interface';
 import { ICharactersResponse } from '../interfaces/characters-response/characters-response.interface';
@@ -40,6 +40,7 @@ export class SearchService {
     return this._httpClient
       .get<T>(`${this.API_URL}/${endpoint}`, { params })
       .pipe(
+        take(1),
         catchError((error) => {
           console.error(`Error fetching ${endpoint}:`, error);
           // Return empty result instead of throwing error
@@ -59,6 +60,12 @@ export class SearchService {
     additionalParams: HttpParams = new HttpParams()
   ): Observable<IAnimesResponse> {
     return this.fetchData<IAnimesResponse>('anime', name, additionalParams);
+  }
+
+  getAnimesByParams(
+    additionalParams: HttpParams = new HttpParams()
+  ): Observable<IAnimesResponse> {
+    return this.fetchData<IAnimesResponse>('anime', '', additionalParams);
   }
 
   getMangasByName(
