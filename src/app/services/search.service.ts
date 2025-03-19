@@ -23,8 +23,11 @@ export class SearchService {
     additionalParams: HttpParams = new HttpParams(),
     defaultParams: HttpParams = new HttpParams()
   ): Observable<T> {
-    // Start with query param
-    let params = new HttpParams().set('q', query);
+    // Start with query param if present
+    let params = new HttpParams();
+    if (query) {
+      params = new HttpParams().set('q', query);
+    }
 
     // Add default params for this endpoint type
     defaultParams.keys().forEach((key) => {
@@ -68,6 +71,17 @@ export class SearchService {
 
   getTopAnimes(additionalParams: HttpParams): Observable<IAnimesResponse> {
     return this.fetchData<IAnimesResponse>('top/anime', '', additionalParams);
+  }
+
+  getNextSeasonAnimes(
+    additionalParams: HttpParams
+  ): Observable<IAnimesResponse> {
+    // TODO: CREATE A RESPONSIVE FUNCTION TO GET THE NEXT SEASON
+    return this.fetchData<IAnimesResponse>(
+      'seasons/2025/spring',
+      '',
+      additionalParams
+    );
   }
 
   getMangasByName(
