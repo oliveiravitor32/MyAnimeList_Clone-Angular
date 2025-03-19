@@ -66,6 +66,10 @@ export class SearchService {
     return this.fetchData<IAnimesResponse>('anime', '', additionalParams);
   }
 
+  getTopAnimes(additionalParams: HttpParams): Observable<IAnimesResponse> {
+    return this.fetchData<IAnimesResponse>('top/anime', '', additionalParams);
+  }
+
   getMangasByName(
     name: string,
     additionalParams: HttpParams

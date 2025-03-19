@@ -16,21 +16,16 @@ export class HomeComponent implements OnInit {
 
   constructor(private readonly _searchService: SearchService) {}
   ngOnInit(): void {
-    const defaultParams = new HttpParams().set('type', 'tv').set('sort', 'asc');
-
-    const mostPopularAnimes = defaultParams
-      .set('order_by', 'popularity')
+    const mostPopularAnimes = new HttpParams()
+      .set('filter', 'bypopularity')
       .set('limit', '10');
 
-    const topAiringAnimesParams = defaultParams
-      .set('order_by', 'score')
-      .set('sort', 'desc')
-      .set('status', 'airing')
+    const topAiringAnimesParams = new HttpParams()
+      .set('filter', 'airing')
       .set('limit', '5');
 
-    const topUpcomingAnimesParams = defaultParams
-      .set('order_by', 'popularity')
-      .set('status', 'upcoming')
+    const topUpcomingAnimesParams = new HttpParams()
+      .set('filter', 'upcoming')
       .set('limit', '5');
 
     this.getMostPopularAnimes(mostPopularAnimes);
@@ -40,7 +35,7 @@ export class HomeComponent implements OnInit {
 
   getMostPopularAnimes(params: HttpParams): void {
     this._searchService
-      .getAnimesByParams(params)
+      .getTopAnimes(params)
       .pipe(take(1))
       .subscribe((response) => {
         this.mostPopularAnimes = response.data;
@@ -49,7 +44,7 @@ export class HomeComponent implements OnInit {
 
   getTopAiringAnimes(params: HttpParams): void {
     this._searchService
-      .getAnimesByParams(params)
+      .getTopAnimes(params)
       .pipe(take(1))
       .subscribe((response) => {
         this.topAiringAnimes = response.data;
@@ -58,7 +53,7 @@ export class HomeComponent implements OnInit {
 
   getTopUpcomingAnimes(params: HttpParams): void {
     this._searchService
-      .getAnimesByParams(params)
+      .getTopAnimes(params)
       .pipe(take(1))
       .subscribe((response) => {
         this.topUpcomingAnimes = response.data;
