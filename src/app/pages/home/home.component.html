@@ -6,7 +6,9 @@
       Welcome to MyAnimeList-clone!
     </h1>
     <div class="flex py-3">
-      <section class="w-[740px] border-r-2 border-gray-extralight px-2">
+      <section
+        class="flex flex-col w-[740px] border-r-2 border-gray-extralight px-2"
+      >
         <app-post-showcase></app-post-showcase>
       </section>
       <aside class="w-[320px] flex flex-col px-2">
@@ -18,10 +20,18 @@
           title="Top Upcoming Anime"
           [dataList]="topUpcomingAnimes"
         ></app-anime-leaderboard>
+        @defer(on viewport) {
         <app-anime-leaderboard
           title="Most Popular Anime"
           [dataList]="mostPopularAnimes"
         ></app-anime-leaderboard>
+        } @placeholder {
+        <h2
+          class="flex justify-between text-neutral-200 text-sm font-bold bg-gray-extralight px-1.5 pb-1 pt-2"
+        >
+          Most Popular Anime >
+        </h2>
+        }
       </aside>
     </div>
   </main>
