@@ -108,12 +108,10 @@ export class NavbarComponent implements OnInit, OnDestroy {
           // Get the correct category based on the select input value
           const category = categoryValue as CategoryTypeEnum;
 
-          let additionalParams: HttpParams = new HttpParams();
-
-          // Set additional params for pagination if the category is not USERS
-          if (category !== CategoryTypeEnum.USERS) {
-            additionalParams.set('page', '1').set('limit', '10');
-          }
+          let additionalParams: HttpParams = new HttpParams().set(
+            'limit',
+            '10'
+          );
 
           const searchMethod = categoryMethodMap[category];
           return searchMethod(textValue!, additionalParams).pipe(take(1));

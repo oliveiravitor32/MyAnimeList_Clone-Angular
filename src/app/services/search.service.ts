@@ -57,27 +57,25 @@ export class SearchService {
   // Simplified endpoint methods
   getAnimesByName(
     name: string,
-    additionalParams: HttpParams = new HttpParams()
+    additionalParams: HttpParams
   ): Observable<IAnimesResponse> {
     return this.fetchData<IAnimesResponse>('anime', name, additionalParams);
   }
 
-  getAnimesByParams(
-    additionalParams: HttpParams = new HttpParams()
-  ): Observable<IAnimesResponse> {
+  getAnimesByParams(additionalParams: HttpParams): Observable<IAnimesResponse> {
     return this.fetchData<IAnimesResponse>('anime', '', additionalParams);
   }
 
   getMangasByName(
     name: string,
-    additionalParams: HttpParams = new HttpParams()
+    additionalParams: HttpParams
   ): Observable<IMangasResponse> {
     return this.fetchData<IMangasResponse>('manga', name, additionalParams);
   }
 
   getCharactersByName(
     name: string,
-    additionalParams: HttpParams = new HttpParams()
+    additionalParams: HttpParams
   ): Observable<ICharactersResponse> {
     const defaultParams = new HttpParams()
       .set('order_by', 'favorites')
@@ -92,7 +90,7 @@ export class SearchService {
 
   getPeoplesByName(
     name: string,
-    additionalParams: HttpParams = new HttpParams()
+    additionalParams: HttpParams
   ): Observable<IPeoplesResponse> {
     const defaultParams = new HttpParams()
       .set('order_by', 'favorites')
@@ -107,7 +105,7 @@ export class SearchService {
 
   getClubsByName(
     name: string,
-    additionalParams: HttpParams = new HttpParams()
+    additionalParams: HttpParams
   ): Observable<IClubsResponse> {
     const defaultParams = new HttpParams()
       .set('order_by', 'members_count')
@@ -122,7 +120,7 @@ export class SearchService {
 
   getUsersByName(
     name: string,
-    additionalParams: HttpParams = new HttpParams()
+    additionalParams: HttpParams
   ): Observable<IUsersResponse> {
     return this.fetchData<IUsersResponse>('users', name, additionalParams);
   }
