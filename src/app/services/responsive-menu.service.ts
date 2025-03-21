@@ -40,6 +40,8 @@ export class ResponsiveMenuService implements OnDestroy {
   private handleMediaChange = (event: MediaQueryListEvent): void => {
     // Update desktop view signal when screen size changes
     this.isDesktopView.set(event.matches);
+    // Force unlock body scroll when switching to desktop view
+    this.updateBodyScrollState();
 
     // Auto-close menus when switching to mobile view
     if (!event.matches) {
@@ -56,7 +58,7 @@ export class ResponsiveMenuService implements OnDestroy {
     }
 
     this.isDropdownLinksOpen.set(!currentValue);
-    this.updateBodyScrollState(!currentValue);
+    this.updateBodyScrollState();
   }
 
   toggleSearchBar(): void {
@@ -68,23 +70,22 @@ export class ResponsiveMenuService implements OnDestroy {
     }
 
     this.isSearchBarOpen.set(!currentValue);
-    this.updateBodyScrollState(!currentValue);
+    this.updateBodyScrollState();
   }
 
   closeAllMenus(): void {
     this.isDropdownLinksOpen.set(false);
     this.isSearchBarOpen.set(false);
-    this.updateBodyScrollState(false);
+    this.updateBodyScrollState();
   }
 
-  updateBodyScrollState(isOpen: boolean): void {
+  updateBodyScrollState(): void {
     if (this.isAnyMenuOpen() && !this.isDesktopView()) {
       // lock body scroll
       this.document.body.classList.add('overflow-hidden');
-    } else {
-      // unlock body scroll
-      this.document.body.classList.remove('overflow-hidden');
     }
+    // unlock body scroll
+    this.document.body.classList.remove('overflow-hidden');
   }
 
   ngOnDestroy(): void {
