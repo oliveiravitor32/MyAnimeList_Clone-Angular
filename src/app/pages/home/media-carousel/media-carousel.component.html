@@ -1,4 +1,3 @@
-<!-- media-carousel.component.html -->
 <section
   class="media-carousel mb-8"
   role="region"
@@ -21,12 +20,12 @@
   <div class="relative">
     <button
       (click)="prev()"
-      class="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-gray-dark bg-opacity-70 hover:bg-opacity-90 text-white p-2 rounded-r focus:outline-none focus:ring-2 focus:ring-blue-light"
+      class="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-gray-dark bg-opacity-80 hover:bg-opacity-90 text-white p-2 rounded-r focus:outline-none focus:ring-2 focus:ring-blue-light"
       aria-label="Previous items"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        class="h-5 w-5"
+        class="h-6 w-6"
         viewBox="0 0 20 20"
         fill="currentColor"
       >
@@ -37,49 +36,67 @@
         />
       </svg>
     </button>
-
-    <!-- Carousel container -->
-    <div class="overflow-hidden duration-2000">
-      <ul
-        #carouselTrack
-        class="flex gap-2 w-full ease-in-out transition-all duration-1000"
-      >
-        @for(item of items; track trackById) { @defer(when
+    <div class="overflow-hidden">
+      <ul #carouselTrack class="flex gap-2 w-full">
+        @if(items.length <= 0) { @for(item of emptyArray; track $index) {
+        <li
+          tabindex="-1"
+          class="relative flex-shrink-0 w-[110px] h-[150px] bg-gray-700 animate-pulse"
+          [style.width]="width"
+          [style.height]="height"
+        >
+          <span class="sr-only">Loading item...</span>
+        </li>
+        } } @for(item of items; track trackById) { @defer(when
         shouldLoadItem($index)) {
         <li
-          class="flex-shrink-0 w-[110px] ease-in-out transition-all duration-2000"
+          class="flex-shrink-0 focus-within:opacity-65 hover:opacity-65 transition-opacity duration-500"
+          [style.width]="width"
+          [style.height]="height"
         >
-          <a [href]="item.url || '#'" class="group block">
-            <div class="relative">
+          <a
+            class="w-full h-full"
+            [tabindex]="$index < itemsToShow ? 0 : -1"
+            [href]="item.url || '#'"
+          >
+            <figure
+              class="relative w-full h-full flex items-end justify-center"
+            >
               <img
                 [src]="item.images.webp.image_url"
                 [alt]="item.title"
-                class="w-full h-[150px] object-cover rounded hover:opacity-90 transition-opacity"
                 loading="lazy"
+                fill
+                class="absolute"
+                [style.min-width]="width"
+                [style.min-height]="height"
               />
-            </div>
-            <h3
-              class="text-blue-extralight text-xs mt-1 line-clamp-2 leading-tight group-hover:underline"
-            >
-              {{ item.title }}
-            </h3>
+              <figcaption
+                class="w-full z-10 p-2 pt-6 text-white bg-gradient-to-t from-gray-default to-transparent font-medium text-xs leading-tight"
+              >
+                {{ item.title }}
+              </figcaption>
+            </figure>
           </a>
         </li>
         } @placeholder {
-        <li class="flex-shrink-0 w-[110px] h-[150px] bg-gray-700 animate-pulse">
-          Loading...
+        <li
+          tabindex="-1"
+          class="relative flex-shrink-0 w-[110px] h-[150px] bg-gray-700 animate-pulse"
+        >
+          <span class="sr-only">Loading item...</span>
         </li>
         } }
       </ul>
     </div>
     <button
       (click)="next()"
-      class="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-gray-dark bg-opacity-70 hover:bg-opacity-90 text-white p-2 rounded-l focus:outline-none focus:ring-2 focus:ring-blue-light"
+      class="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-gray-dark bg-opacity-80 hover:bg-opacity-95 text-white p-2 rounded-l focus:outline-none focus:ring-2 focus:ring-blue-light"
       aria-label="Next items"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        class="h-5 w-5"
+        class="h-6 w-6"
         viewBox="0 0 20 20"
         fill="currentColor"
       >

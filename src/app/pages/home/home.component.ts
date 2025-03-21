@@ -29,7 +29,7 @@ export class HomeComponent implements OnInit {
       .set('filter', 'upcoming')
       .set('limit', '5');
 
-    const nextSeasonAnimesParams = new HttpParams().set('limit', '20');
+    const nextSeasonAnimesParams = new HttpParams().set('limit', '21');
 
     this.getMostPopularAnimes(mostPopularAnimes);
     this.getTopAiringAnimes(topAiringAnimesParams);
@@ -69,7 +69,6 @@ export class HomeComponent implements OnInit {
       .getNextSeasonAnimes(params)
       .pipe(take(1))
       .subscribe((response) => {
-        console.log(response.data);
         this.nextSeasonAnimes = response.data;
       });
   }
