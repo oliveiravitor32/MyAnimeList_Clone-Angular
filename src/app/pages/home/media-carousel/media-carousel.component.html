@@ -1,61 +1,42 @@
-<section
-  class="media-carousel mb-8"
-  role="region"
-  aria-roledescription="carousel"
->
+<section class="media-carousel" role="region" aria-roledescription="carousel">
   <header
-    class="flex justify-between items-center border-b-2 border-gray-extralight mb-4"
+    class="flex justify-between items-center border-b-2 border-gray-extralight mb-1"
   >
     <h2 id="carousel-{{ title }}" class="text-sm font-semibold text-white">
       {{ title }}
     </h2>
     <a
-      [href]="viewAllLink"
+      [href]="viewMoreLink"
       class="text-xs text-blue-extralight hover:underline underline-offset-1"
     >
-      View All
+      View more
     </a>
   </header>
 
   <div class="relative">
     <button
       (click)="prev()"
-      class="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-gray-dark bg-opacity-80 hover:bg-opacity-90 text-white p-2 rounded-r focus:outline-none focus:ring-2 focus:ring-blue-light"
+      class="absolute p-4 left-0 top-1/2 -translate-y-1/2 z-10 bg-gray-dark bg-opacity-90 hover:bg-opacity-90 rounded-r focus:outline-none focus:ring-2 focus:ring-blue-light"
       aria-label="Previous items"
     >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        class="h-6 w-6"
-        viewBox="0 0 20 20"
-        fill="currentColor"
-      >
-        <path
-          fill-rule="evenodd"
-          d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
-          clip-rule="evenodd"
-        />
-      </svg>
+      <fa-icon class="text-white text-lg" [icon]="leftArrowIcon"></fa-icon>
     </button>
     <div class="overflow-hidden">
       <ul #carouselTrack class="flex gap-2 w-full">
-        @if(items.length <= 0) { @for(item of emptyArray; track $index) {
-        <li
-          tabindex="-1"
-          class="relative flex-shrink-0 w-[110px] h-[150px] bg-gray-700 animate-pulse"
-          [style.width]="width"
-          [style.height]="height"
-        >
-          <span class="sr-only">Loading item...</span>
-        </li>
-        } } @for(item of items; track trackById) { @defer(when
+        @for(item of items; track trackById) { @defer(when
         shouldLoadItem($index)) {
         <li
-          class="flex-shrink-0 focus-within:opacity-65 hover:opacity-65 transition-opacity duration-500"
-          [style.width]="width"
-          [style.height]="height"
+          class="flex-shrink-0"
+          [style.width]="getWidth"
+          [style.height]="getHeight"
+          [title]="
+            isTrailer
+              ? (item.title || 'Unknown') + ' Trailer'
+              : item.title || 'Unknown'
+          "
         >
           <a
-            class="w-full h-full"
+            class="w-full h-full focus-within:opacity-65 hover:opacity-65 transition-opacity duration-400"
             [tabindex]="$index < itemsToShow ? 0 : -1"
             [href]="item.url || '#'"
           >
@@ -63,21 +44,48 @@
               class="relative w-full h-full flex items-end justify-center"
             >
               <img
-                [src]="item.images.webp.image_url"
+                [src]="
+                  isTrailer
+                    ? item.trailer.images.medium_image_url ||
+                      item.images.webp.image_url
+                    : item.images.webp.image_url
+                "
                 [alt]="item.title"
                 loading="lazy"
                 fill
-                class="absolute"
-                [style.min-width]="width"
-                [style.min-height]="height"
+                class="absolute z-0"
+                [style.width]="getWidth"
+                [style.height]="getHeight"
               />
+
+              @if(isTrailer) {
+              <span
+                class="absolute px-4 py-0.5 left-2/4 top-2/4 -translate-y-1/2 -translate-x-1/2 z-10 bg-gray-dark opacity-80 border-2 border-white rounded-sm"
+              >
+                <fa-icon
+                  class="text-white text-base"
+                  [icon]="playIcon"
+                ></fa-icon>
+              </span>
+              } @else {
               <figcaption
                 class="w-full z-10 p-2 pt-6 text-white bg-gradient-to-t from-gray-default to-transparent font-medium text-xs leading-tight"
               >
                 {{ item.title }}
               </figcaption>
+              }
             </figure>
           </a>
+          @if(isTrailer) {
+          <a
+            [href]="item.url || '#'"
+            [title]="item.title || 'Unknown'"
+            tabindex="-1"
+            class="w-full z-10 p-2 pt-6 text-blue-extralight font-medium text-xs leading-tight hover:underline"
+          >
+            {{ item.title }}</a
+          >
+          }
         </li>
         } @placeholder {
         <li
@@ -86,26 +94,24 @@
         >
           <span class="sr-only">Loading item...</span>
         </li>
+        } }@empty { @for(item of emptyArray; track $index) {
+        <li
+          tabindex="-1"
+          class="relative flex-shrink-0 w-[110px] h-[150px] bg-gray-700 animate-pulse"
+          [style.width]="getWidth"
+          [style.height]="getHeight"
+        >
+          <span class="sr-only">Loading item...</span>
+        </li>
         } }
       </ul>
     </div>
     <button
       (click)="next()"
-      class="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-gray-dark bg-opacity-80 hover:bg-opacity-95 text-white p-2 rounded-l focus:outline-none focus:ring-2 focus:ring-blue-light"
+      class="absolute p-4 right-0 top-1/2 -translate-y-1/2 z-10 bg-gray-dark bg-opacity-90 hover:bg-opacity-95 rounded-l focus:outline-none focus:ring-2 focus:ring-blue-light"
       aria-label="Next items"
     >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        class="h-6 w-6"
-        viewBox="0 0 20 20"
-        fill="currentColor"
-      >
-        <path
-          fill-rule="evenodd"
-          d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-          clip-rule="evenodd"
-        />
-      </svg>
+      <fa-icon class="text-white text-lg" [icon]="rightArrowIcon"></fa-icon>
     </button>
   </div>
 </section>

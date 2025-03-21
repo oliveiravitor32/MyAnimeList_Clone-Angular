@@ -31,10 +31,10 @@ export class HomeComponent implements OnInit {
 
     const nextSeasonAnimesParams = new HttpParams().set('limit', '21');
 
-    this.getMostPopularAnimes(mostPopularAnimes);
     this.getTopAiringAnimes(topAiringAnimesParams);
-    this.getTopUpcomingAnimes(topUpcomingAnimesParams);
     this.getNextSeasonAnimes(nextSeasonAnimesParams);
+    this.getTopUpcomingAnimes(topUpcomingAnimesParams);
+    this.getMostPopularAnimes(mostPopularAnimes);
   }
 
   getMostPopularAnimes(params: HttpParams): void {

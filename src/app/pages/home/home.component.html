@@ -7,14 +7,21 @@
     </h1>
     <div class="flex py-3">
       <section
-        class="flex flex-col w-[740px] border-r-2 border-gray-extralight px-2"
+        class="flex gap-6 flex-col w-[740px] border-r-2 border-gray-extralight px-2"
       >
         <app-post-showcase></app-post-showcase>
         <app-media-carousel
           title="Next Season Animes"
-          viewAllLink="/anime/season"
+          viewMoreLink="#"
           [items]="nextSeasonAnimes"
-          size="default"
+          itemType="anime"
+        >
+        </app-media-carousel>
+        <app-media-carousel
+          title="Most Popular Anime Trailers"
+          viewMoreLink="#"
+          [items]="mostPopularAnimes"
+          itemType="trailer"
         >
         </app-media-carousel>
       </section>

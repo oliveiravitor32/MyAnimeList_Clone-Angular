@@ -8,6 +8,11 @@ import {
   OnDestroy,
   ViewChild,
 } from '@angular/core';
+import {
+  faChevronLeft,
+  faChevronRight,
+  faPlay,
+} from '@fortawesome/free-solid-svg-icons';
 import { debounceTime, Subject, Subscription } from 'rxjs';
 import { AnimesResponseDataList } from '../../../types/animes-response-data-list';
 
@@ -23,20 +28,16 @@ export class MediaCarouselComponent implements AfterViewInit, OnDestroy {
   }
 
   @Input({ required: true }) title: string = 'N/A';
-  @Input({ required: true }) viewAllLink: string = '#';
+  @Input({ required: true }) viewMoreLink: string = '#';
   @Input({ required: true }) items: AnimesResponseDataList = [];
-  @Input({ required: true }) size: string = 'default';
+  @Input({ required: true }) itemType: string = 'anime';
 
   private sizes: { [key: string]: { width: string; height: string } } = {
-    default: {
+    anime: {
       width: '160px',
       height: '220px',
     },
-    small: {
-      width: '108px',
-      height: '163px',
-    },
-    wide: {
+    trailer: {
       width: '220px',
       height: '120px',
     },
@@ -56,6 +57,10 @@ export class MediaCarouselComponent implements AfterViewInit, OnDestroy {
   private isAnimating: boolean = false;
   itemsToShow: number = 4;
 
+  leftArrowIcon = faChevronLeft;
+  rightArrowIcon = faChevronRight;
+  playIcon = faPlay;
+
   constructor() {
     this.resizeSubscription = this.resizeSubject
       .pipe(debounceTime(this.resizeDebounceTime))
@@ -64,12 +69,16 @@ export class MediaCarouselComponent implements AfterViewInit, OnDestroy {
       });
   }
 
-  get width(): string {
-    return this.sizes[this.size].width || this.sizes['default'].width;
+  get getWidth(): string {
+    return this.sizes[this.itemType].width || this.sizes['anime'].width;
   }
 
-  get height(): string {
-    return this.sizes[this.size].height || this.sizes['default'].height;
+  get getHeight(): string {
+    return this.sizes[this.itemType].height || this.sizes['anime'].height;
+  }
+
+  get isTrailer(): boolean {
+    return this.itemType === 'trailer';
   }
 
   // Get empty array to fill the space when is loading
@@ -94,11 +103,9 @@ export class MediaCarouselComponent implements AfterViewInit, OnDestroy {
 
     const track = this.carouselTrack.nativeElement;
 
-    // Adjust slides based on viewport
-    if (window.innerWidth < 768) {
-      this.itemsToShow = 4;
-    } else {
-      this.itemsToShow = 4;
+    // Adjust total of slides
+    if (this.isTrailer) {
+      this.itemsToShow = 3;
     }
 
     // Calculate slide width based on first item
