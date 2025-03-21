@@ -1,6 +1,7 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, Observable, of, take } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { catchError, take } from 'rxjs/operators';
 import { environment } from '../environments/environment';
 import { IAnimesResponse } from '../interfaces/animes-response/animes-response.interface';
 import { ICharactersResponse } from '../interfaces/characters-response/characters-response.interface';
@@ -8,6 +9,7 @@ import { IClubsResponse } from '../interfaces/clubs-response/clubs-response.inte
 import { IMangasResponse } from '../interfaces/mangas-reponse/mangas-response.interface';
 import { IPeoplesResponse } from '../interfaces/peoples-response/peoples-response.interface';
 import { IUsersResponse } from '../interfaces/users-response/users-response.interface';
+import { ApiRateLimiterService } from './api-rate-limiter.service';
 
 @Injectable({
   providedIn: 'root',
@@ -15,33 +17,34 @@ import { IUsersResponse } from '../interfaces/users-response/users-response.inte
 export class SearchService {
   API_URL = environment.apiUrl;
 
-  constructor(private readonly _httpClient: HttpClient) {}
+  constructor(private readonly _apiRateLimiterService: ApiRateLimiterService) {}
 
+  /**
+   * Main data fetching method with cache handling and rate limiting
+   */
   private fetchData<T extends { data: any[]; pagination: any }>(
     endpoint: string,
     query: string,
     additionalParams: HttpParams = new HttpParams(),
     defaultParams: HttpParams = new HttpParams()
   ): Observable<T> {
-    // Start with query param if present
+    // Build final params object
     let params = new HttpParams();
     if (query) {
-      params = new HttpParams().set('q', query);
+      params = params.set('q', query);
     }
 
-    // Add default params for this endpoint type
+    // Add default and additional params
     defaultParams.keys().forEach((key) => {
       params = params.set(key, defaultParams.get(key)!);
     });
 
-    // Add request-specific params (overrides defaults if same keys)
     additionalParams.keys().forEach((key) => {
       params = params.set(key, additionalParams.get(key)!);
     });
 
-    // Make the API call
-    return this._httpClient
-      .get<T>(`${this.API_URL}/${endpoint}`, { params })
+    return this._apiRateLimiterService
+      .executeRequest<T>(`${this.API_URL}/${endpoint}`, { params })
       .pipe(
         take(1),
         catchError((error) => {
