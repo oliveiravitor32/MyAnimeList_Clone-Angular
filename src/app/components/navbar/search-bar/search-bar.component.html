@@ -5,7 +5,7 @@
     aria-label="Search results overlay"
     (click)="closeSearchBar()"
     [class]="isSearchBarOpen ? 'block' : 'hidden'"
-    class="h-screen w-screen inset-0 fixed bg-neutral-800 opacity-25"
+    class="h-screen w-screen inset-0 z-20 fixed bg-neutral-800 opacity-25"
     tabindex="-1"
   >
     <!-- Trap focus inside modal when open -->
@@ -14,7 +14,7 @@
     >
   </div>
   <section
-    class="h-full w-full md:block relative z-10 bg-inherit pr-1.5 lg:pr-2.5"
+    class="h-full w-full md:block relative z-30 bg-inherit pr-1.5 lg:pr-2.5"
   >
     <div class="h-full pl-2 w-full flex items-center">
       <form
