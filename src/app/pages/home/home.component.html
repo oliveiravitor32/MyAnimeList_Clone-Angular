@@ -10,6 +10,12 @@
         class="flex flex-col w-[740px] border-r-2 border-gray-extralight px-2"
       >
         <app-post-showcase></app-post-showcase>
+        <app-media-carousel
+          title="Next Season Animes"
+          viewAllLink="/anime/season"
+          [items]="nextSeasonAnimes"
+        >
+        </app-media-carousel>
       </section>
       <aside class="w-[320px] flex flex-col px-2">
         <app-anime-leaderboard

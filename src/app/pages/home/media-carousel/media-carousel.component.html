@@ -1,0 +1,94 @@
+<!-- media-carousel.component.html -->
+<section
+  class="media-carousel mb-8"
+  role="region"
+  aria-roledescription="carousel"
+>
+  <header
+    class="flex justify-between items-center border-b-2 border-gray-extralight mb-4"
+  >
+    <h2 id="carousel-{{ title }}" class="text-sm font-semibold text-white">
+      {{ title }}
+    </h2>
+    <a
+      [href]="viewAllLink"
+      class="text-xs text-blue-extralight hover:underline underline-offset-1"
+    >
+      View All
+    </a>
+  </header>
+
+  <div class="relative">
+    <button
+      (click)="prev()"
+      class="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-gray-dark bg-opacity-70 hover:bg-opacity-90 text-white p-2 rounded-r focus:outline-none focus:ring-2 focus:ring-blue-light"
+      aria-label="Previous items"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-5 w-5"
+        viewBox="0 0 20 20"
+        fill="currentColor"
+      >
+        <path
+          fill-rule="evenodd"
+          d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
+          clip-rule="evenodd"
+        />
+      </svg>
+    </button>
+
+    <!-- Carousel container -->
+    <div class="overflow-hidden duration-2000">
+      <ul
+        #carouselTrack
+        class="flex gap-2 w-full ease-in-out transition-all duration-1000"
+      >
+        @for(item of items; track trackById) { @defer(when
+        shouldLoadItem($index)) {
+        <li
+          class="flex-shrink-0 w-[110px] ease-in-out transition-all duration-2000"
+        >
+          <a [href]="item.url || '#'" class="group block">
+            <div class="relative">
+              <img
+                [src]="item.images.webp.image_url"
+                [alt]="item.title"
+                class="w-full h-[150px] object-cover rounded hover:opacity-90 transition-opacity"
+                loading="lazy"
+              />
+            </div>
+            <h3
+              class="text-blue-extralight text-xs mt-1 line-clamp-2 leading-tight group-hover:underline"
+            >
+              {{ item.title }}
+            </h3>
+          </a>
+        </li>
+        } @placeholder {
+        <li class="flex-shrink-0 w-[110px] h-[150px] bg-gray-700 animate-pulse">
+          Loading...
+        </li>
+        } }
+      </ul>
+    </div>
+    <button
+      (click)="next()"
+      class="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-gray-dark bg-opacity-70 hover:bg-opacity-90 text-white p-2 rounded-l focus:outline-none focus:ring-2 focus:ring-blue-light"
+      aria-label="Next items"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-5 w-5"
+        viewBox="0 0 20 20"
+        fill="currentColor"
+      >
+        <path
+          fill-rule="evenodd"
+          d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+          clip-rule="evenodd"
+        />
+      </svg>
+    </button>
+  </div>
+</section>
