@@ -31,8 +31,8 @@
           [style.height]="getHeight"
           [title]="
             isTrailer
-              ? (item.title || 'Unknown') + ' Trailer'
-              : item.title || 'Unknown'
+              ? (item.title_english || item.title || 'Unknown') + ' Trailer'
+              : item.title_english || item.title || 'Unknown'
           "
         >
           <a
@@ -50,7 +50,7 @@
                       item.images.webp.image_url
                     : item.images.webp.image_url
                 "
-                [alt]="item.title"
+                [alt]="item.title_english || item.title"
                 loading="lazy"
                 fill
                 class="absolute z-0"
@@ -71,7 +71,7 @@
               <figcaption
                 class="w-full z-10 p-2 pt-6 text-white bg-gradient-to-t from-gray-default to-transparent font-medium text-xs leading-tight"
               >
-                {{ item.title }}
+                {{ item.title_english || item.title }}
               </figcaption>
               }
             </figure>
@@ -79,11 +79,11 @@
           @if(isTrailer) {
           <a
             [href]="item.url || '#'"
-            [title]="item.title || 'Unknown'"
+            [title]="item.title_english || item.title || 'Unknown'"
             tabindex="-1"
             class="w-full z-10 p-2 pt-6 text-blue-extralight font-medium text-xs leading-tight hover:underline"
           >
-            {{ item.title }}</a
+            {{ item.title_english || item.title }}</a
           >
           }
         </li>
