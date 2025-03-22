@@ -46,7 +46,14 @@
           </p>
         </div>
       </li>
-      }
+      } @empty { @for (item of emptyArray; track $index) {
+      <li
+        tabindex="-1"
+        class="ml-6 w-[50px] h-[70px] bg-gray-extralight animate-pulse"
+      >
+        <span class="sr-only">Loading anime...</span>
+      </li>
+      } }
     </ul>
   </section>
 </div>

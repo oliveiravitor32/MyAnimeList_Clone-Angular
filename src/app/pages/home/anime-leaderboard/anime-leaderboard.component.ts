@@ -11,4 +11,9 @@ export class AnimeLeaderboardComponent {
   @Input({ required: true }) dataList!: AnimesResponseDataList;
 
   readonly defaultImageUrl = '/assets/icons/question-icon.png';
+
+  // Get empty array to fill the space when is loading
+  get emptyArray(): any[] {
+    return Array.from({ length: 5 });
+  }
 }
