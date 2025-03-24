@@ -23,7 +23,11 @@
         <a href="#" class="min-w-14">
           <img
             class="border-2 border-gray-extralight h-[70px] w-[50px]"
-            [ngSrc]="data.images.webp.image_url || defaultImageUrl"
+            [ngSrc]="
+              data.images.webp.small_image_url ||
+              data.images.webp.image_url ||
+              defaultImageUrl
+            "
             [alt]="data.title || 'Unknown'"
             height="70"
             width="50"
@@ -39,7 +43,7 @@
               {{ data.title_english || data.title || "Unknown" }}
             </a>
           </div>
-          <p class="text-xs font-gray-light">
+          <p class="text-xs text-neutral-400">
             {{ data.type || "N/A" }}, {{ data.episodes || "0" }} eps, scored
             {{ data.score || "N/A" }}, <br />
             {{ data.members ? (data.members | number) : "N/A" }} members
