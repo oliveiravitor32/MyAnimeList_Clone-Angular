@@ -1,36 +1,21 @@
-<div class="min-w-52 text-xs">
+<div class="w-52 max-w-52 text-xs">
   <div class="flex pb-1 justify-between items-end">
-    <h3 class="text-white text-base">Top Anime</h3>
-    <a href="#" class="text-blue-extralight">More</a>
+    <h3 class="text-white text-sm">{{ title }}</h3>
+    <a href="#" class="text-blue-extralight hover:underline">More</a>
   </div>
   <hr
     class="h-px border-0 bg-gradient-to-r from-gray-light via-gray-extralight to-gray-light"
   />
   <ul class="flex pt-3 flex-col gap-1 text-blue-extralight">
+    @for (item of items; track item.mal_id || $index) {
     <li>
-      <a class="hover:underline hover:cursor-pointer">
-        <span class="text-neutral-400 mr-2">1</span> Solo Leveling
+      <a class="flex group hover:cursor-pointer text-xs">
+        <span class="text-neutral-400 mr-2">
+          {{ $index + 1 }}
+        </span>
+        <span class="group-hover:underline"> {{ titleOrName(item) }}</span>
       </a>
     </li>
-    <li>
-      <a class="hover:underline hover:cursor-pointer">
-        <span class="text-neutral-400 mr-2">2</span> Solo Leveling
-      </a>
-    </li>
-    <li>
-      <a class="hover:underline hover:cursor-pointer">
-        <span class="text-neutral-400 mr-2">3</span> Solo Leveling
-      </a>
-    </li>
-    <li>
-      <a class="hover:underline hover:cursor-pointer">
-        <span class="text-neutral-400 mr-2">4</span> Solo Leveling
-      </a>
-    </li>
-    <li>
-      <a class="hover:underline hover:cursor-pointer">
-        <span class="text-neutral-400 mr-2">5</span> Solo Leveling
-      </a>
-    </li>
+    }
   </ul>
 </div>

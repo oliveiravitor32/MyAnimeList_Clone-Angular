@@ -1,8 +1,17 @@
 <footer class="w-full mt-12">
-  <div class="flex justify-center py-3 gap-6 bg-gray-default">
-    <app-top-links-ranking></app-top-links-ranking>
-    <app-top-links-ranking></app-top-links-ranking>
-    <app-top-links-ranking></app-top-links-ranking>
+  <div class="flex justify-center py-3 gap-8 bg-gray-default">
+    <app-top-links-ranking
+      title="Top Anime"
+      [items]="topAnimes"
+    ></app-top-links-ranking>
+    <app-top-links-ranking
+      title="Top Airing Anime"
+      [items]="topAiringAnimes"
+    ></app-top-links-ranking>
+    <app-top-links-ranking
+      title="Most Popular Characters"
+      [items]="topCharacters"
+    ></app-top-links-ranking>
   </div>
 
   <app-about-us></app-about-us>
