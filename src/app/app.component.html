@@ -1,7 +1,22 @@
-<div class="m-auto max-w-[1060px]">
+<div class="mx-auto mb-12 max-w-[1060px]">
   <app-header></app-header>
   <app-banner></app-banner>
   <app-navbar></app-navbar>
   <app-home></app-home>
 </div>
+
+@defer(on viewport){
 <app-footer></app-footer>
+} @placeholder {
+<footer class="w-full py-3 bg-gray-light flex justify-center">
+  <div class="max-w-[1060px] w-full">
+    <h3 class="text-sm font-thin text-neutral-200">
+      <strong class="text-white font-bold"
+        >It’s time to ditch the text file.</strong
+      >
+      <br />
+      Keep track of your anime easily by creating your own list.
+    </h3>
+  </div>
+</footer>
+}

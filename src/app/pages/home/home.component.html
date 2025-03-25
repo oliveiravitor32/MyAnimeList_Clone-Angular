@@ -1,52 +1,50 @@
-<div class="w-full">
-  <main class="w-full h-full border-x-2 border-b-2 border-gray-extralight">
-    <h1
-      class="text-gray-200 border-b-2 border-gray-extralight text-lg font-bold bg-gray-light p-3 py-1"
+<main class="w-full h-full border-x-2 border-b-2 border-gray-extralight">
+  <h1
+    class="text-gray-200 border-b-2 border-gray-extralight text-lg font-bold bg-gray-light p-3 py-1"
+  >
+    Welcome to MyAnimeList-clone!
+  </h1>
+  <div class="flex py-3">
+    <section
+      class="flex gap-6 flex-col w-[740px] border-r-2 border-gray-extralight px-2"
     >
-      Welcome to MyAnimeList-clone!
-    </h1>
-    <div class="flex py-3">
-      <section
-        class="flex gap-6 flex-col w-[740px] border-r-2 border-gray-extralight px-2"
+      <app-post-showcase></app-post-showcase>
+      <app-media-carousel
+        title="Next Season Animes"
+        viewMoreLink="#"
+        [items]="nextSeasonAnimes"
+        itemType="anime"
       >
-        <app-post-showcase></app-post-showcase>
-        <app-media-carousel
-          title="Next Season Animes"
-          viewMoreLink="#"
-          [items]="nextSeasonAnimes"
-          itemType="anime"
-        >
-        </app-media-carousel>
-        <app-media-carousel
-          title="Most Popular Anime Trailers"
-          viewMoreLink="#"
-          [items]="mostPopularAnimes"
-          itemType="trailer"
-        >
-        </app-media-carousel>
-      </section>
-      <aside class="w-[320px] flex flex-col px-2">
-        <app-anime-leaderboard
-          title="Top Airing Anime"
-          [dataList]="topAiringAnimes"
-        ></app-anime-leaderboard>
-        <app-anime-leaderboard
-          title="Top Upcoming Anime"
-          [dataList]="topUpcomingAnimes"
-        ></app-anime-leaderboard>
-        @defer(on viewport) {
-        <app-anime-leaderboard
-          title="Most Popular Anime"
-          [dataList]="mostPopularAnimes"
-        ></app-anime-leaderboard>
-        } @placeholder {
-        <h2
-          class="flex justify-between text-neutral-200 text-sm font-bold bg-gray-extralight px-1.5 pb-1 pt-2"
-        >
-          Most Popular Anime >
-        </h2>
-        }
-      </aside>
-    </div>
-  </main>
-</div>
+      </app-media-carousel>
+      <app-media-carousel
+        title="Most Popular Anime Trailers"
+        viewMoreLink="#"
+        [items]="mostPopularAnimes"
+        itemType="trailer"
+      >
+      </app-media-carousel>
+    </section>
+    <aside class="w-[320px] flex flex-col px-2">
+      <app-anime-leaderboard
+        title="Top Airing Anime"
+        [dataList]="topAiringAnimes"
+      ></app-anime-leaderboard>
+      <app-anime-leaderboard
+        title="Top Upcoming Anime"
+        [dataList]="topUpcomingAnimes"
+      ></app-anime-leaderboard>
+      @defer(on viewport) {
+      <app-anime-leaderboard
+        title="Most Popular Anime"
+        [dataList]="mostPopularAnimes"
+      ></app-anime-leaderboard>
+      } @placeholder {
+      <h2
+        class="flex justify-between text-neutral-200 text-sm font-bold bg-gray-extralight px-1.5 pb-1 pt-2"
+      >
+        Most Popular Anime >
+      </h2>
+      }
+    </aside>
+  </div>
+</main>
