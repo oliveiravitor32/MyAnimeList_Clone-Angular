@@ -1,14 +1,16 @@
-<div class="w-full flex justify-center items-center">
+<figure class="w-full flex justify-center items-center">
   <a
     href="#"
-    class="relative w-full h-64"
+    class="relative w-full h-full"
     [attr.aria-label]="bannerAlt || 'Promotional banner'"
   >
     <img
+      class="h-auto w-full"
       ngSrc="https://myanimelist.net/c/img/resources/pda/AF_20250316_PDA/PDA_PC_top.png"
       [alt]="bannerAlt"
-      fill
+      width="1060"
+      height="273"
       priority
     />
   </a>
-</div>
+</figure>
