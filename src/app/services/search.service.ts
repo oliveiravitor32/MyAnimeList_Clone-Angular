@@ -24,7 +24,7 @@ export class SearchService {
    */
   private fetchData<T extends { data: any[]; pagination: any }>(
     endpoint: string,
-    query: string,
+    query?: string,
     additionalParams: HttpParams = new HttpParams(),
     defaultParams: HttpParams = new HttpParams()
   ): Observable<T> {
@@ -76,6 +76,45 @@ export class SearchService {
     return this.fetchData<IAnimesResponse>('top/anime', '', additionalParams);
   }
 
+  getMostPopularAnimes(
+    additionalParams: HttpParams
+  ): Observable<IAnimesResponse> {
+    const defaultParams = new HttpParams().set('filter', 'bypopularity');
+
+    return this.fetchData<IAnimesResponse>(
+      'top/anime',
+      '',
+      additionalParams,
+      defaultParams
+    );
+  }
+
+  getTopAiringAnimes(
+    additionalParams: HttpParams
+  ): Observable<IAnimesResponse> {
+    const defaultParams = new HttpParams().set('filter', 'airing');
+
+    return this.fetchData<IAnimesResponse>(
+      'top/anime',
+      '',
+      additionalParams,
+      defaultParams
+    );
+  }
+
+  getTopUpcomingAnimes(
+    additionalParams: HttpParams
+  ): Observable<IAnimesResponse> {
+    const defaultParams = new HttpParams().set('filter', 'upcoming');
+
+    return this.fetchData<IAnimesResponse>(
+      'top/anime',
+      '',
+      additionalParams,
+      defaultParams
+    );
+  }
+
   getNextSeasonAnimes(
     additionalParams: HttpParams
   ): Observable<IAnimesResponse> {
@@ -104,6 +143,19 @@ export class SearchService {
     return this.fetchData<ICharactersResponse>(
       'characters',
       name,
+      additionalParams,
+      defaultParams
+    );
+  }
+  getTopCharacters(
+    additionalParams: HttpParams
+  ): Observable<ICharactersResponse> {
+    const defaultParams = new HttpParams()
+      .set('order_by', 'favorites')
+      .set('sort', 'desc');
+    return this.fetchData<ICharactersResponse>(
+      'characters',
+      '',
       additionalParams,
       defaultParams
     );

@@ -17,54 +17,48 @@ export class HomeComponent implements OnInit {
 
   constructor(private readonly _searchService: SearchService) {}
   ngOnInit(): void {
-    const mostPopularAnimes = new HttpParams()
-      .set('filter', 'bypopularity')
-      .set('limit', '10');
-
-    const topAiringAnimesParams = new HttpParams()
-      .set('filter', 'airing')
-      .set('limit', '5');
-
-    const topUpcomingAnimesParams = new HttpParams()
-      .set('filter', 'upcoming')
-      .set('limit', '5');
-
-    const nextSeasonAnimesParams = new HttpParams().set('limit', '21');
-
-    this.getTopAiringAnimes(topAiringAnimesParams);
-    this.getNextSeasonAnimes(nextSeasonAnimesParams);
-    this.getTopUpcomingAnimes(topUpcomingAnimesParams);
-    this.getMostPopularAnimes(mostPopularAnimes);
+    this.getTopAiringAnimes();
+    this.getNextSeasonAnimes();
+    this.getTopUpcomingAnimes();
+    this.getMostPopularAnimes();
   }
 
-  getMostPopularAnimes(params: HttpParams): void {
+  getMostPopularAnimes(): void {
+    const params = new HttpParams().set('limit', '10');
+
     this._searchService
-      .getTopAnimes(params)
+      .getMostPopularAnimes(params)
       .pipe(take(1))
       .subscribe((response) => {
         this.mostPopularAnimes = response.data;
       });
   }
 
-  getTopAiringAnimes(params: HttpParams): void {
+  getTopAiringAnimes(): void {
+    const params = new HttpParams().set('limit', '5');
+
     this._searchService
-      .getTopAnimes(params)
+      .getTopAiringAnimes(params)
       .pipe(take(1))
       .subscribe((response) => {
         this.topAiringAnimes = response.data;
       });
   }
 
-  getTopUpcomingAnimes(params: HttpParams): void {
+  getTopUpcomingAnimes(): void {
+    const params = new HttpParams().set('limit', '5');
+
     this._searchService
-      .getTopAnimes(params)
+      .getTopUpcomingAnimes(params)
       .pipe(take(1))
       .subscribe((response) => {
         this.topUpcomingAnimes = response.data;
       });
   }
 
-  getNextSeasonAnimes(params: HttpParams): void {
+  getNextSeasonAnimes(): void {
+    const params = new HttpParams().set('limit', '21');
+
     this._searchService
       .getNextSeasonAnimes(params)
       .pipe(take(1))
