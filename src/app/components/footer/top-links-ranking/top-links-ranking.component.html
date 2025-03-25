@@ -16,6 +16,10 @@
         <span class="group-hover:underline"> {{ titleOrName(item) }}</span>
       </a>
     </li>
+    } @empty {
+    <div class="w-full h-28 bg-gray-extralight animate-pulse">
+      <span class="sr-only">Loading {{ title }} links.</span>
+    </div>
     }
   </ul>
 </section>
