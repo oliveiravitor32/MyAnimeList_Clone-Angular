@@ -1,8 +1,8 @@
 import { Component, Input } from '@angular/core';
 import { IAnimesResponseData } from '../../../interfaces/animes-response/animes-response-data.interface';
 import { ICharactersResponseData } from '../../../interfaces/characters-response/characters-response-data.interface';
-import { AnimesResponseDataList } from '../../../types/animes-response-data-list';
-import { CharactersResponseDataList } from './../../../types/characters-response-data-list';
+import { AnimesResponseDataList } from '../../../types/api-response-data-lists/animes-response-data-list';
+import { CharactersResponseDataList } from '../../../types/api-response-data-lists/characters-response-data-list';
 
 @Component({
   selector: 'app-top-links-ranking',

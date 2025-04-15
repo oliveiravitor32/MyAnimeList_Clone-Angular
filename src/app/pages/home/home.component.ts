@@ -1,8 +1,9 @@
 import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { take } from 'rxjs';
-import { AnimesResponseDataList } from '../../types/animes-response-data-list';
+import { AnimesResponseDataList } from '../../types/api-response-data-lists/animes-response-data-list';
 import { SearchService } from './../../services/search.service';
+import { EpisodesResponseDataList } from './../../types/api-response-data-lists/episodes-response-data-list';
 
 @Component({
   selector: 'app-home',
@@ -14,6 +15,7 @@ export class HomeComponent implements OnInit {
   topUpcomingAnimes: AnimesResponseDataList = [];
   mostPopularAnimes: AnimesResponseDataList = [];
   nextSeasonAnimes: AnimesResponseDataList = [];
+  recentEpisodes: EpisodesResponseDataList = [];
 
   constructor(private readonly _searchService: SearchService) {}
   ngOnInit(): void {
@@ -64,6 +66,17 @@ export class HomeComponent implements OnInit {
       .pipe(take(1))
       .subscribe((response) => {
         this.nextSeasonAnimes = response.data;
+      });
+  }
+
+  getRecentEpisodes(): void {
+    const params = new HttpParams().set('limit', '5');
+
+    this._searchService
+      .getRecentEpisodes()
+      .pipe(take(1))
+      .subscribe((response) => {
+        this.recentEpisodes = response.data;
       });
   }
 }

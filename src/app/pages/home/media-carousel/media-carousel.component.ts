@@ -14,7 +14,7 @@ import {
   faPlay,
 } from '@fortawesome/free-solid-svg-icons';
 import { debounceTime, Subject, Subscription } from 'rxjs';
-import { AnimesResponseDataList } from '../../../types/animes-response-data-list';
+import { AnimesResponseDataList } from '../../../types/api-response-data-lists/animes-response-data-list';
 
 @Component({
   selector: 'app-media-carousel',

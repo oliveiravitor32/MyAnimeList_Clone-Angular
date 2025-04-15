@@ -9,12 +9,12 @@ import {
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { faMagnifyingGlass, faTimes } from '@fortawesome/free-solid-svg-icons';
-import { AnimesResponseDataList } from '../../../types/animes-response-data-list';
-import { CharactersResponseDataList } from '../../../types/characters-response-data-list';
-import { ClubsResponseDataList } from '../../../types/clubs-response-data-list';
-import { MangasResponseDataList } from '../../../types/mangas-response-data-list';
-import { PeoplesResponseDataList } from '../../../types/peoples-response-data-list';
-import { UsersResponseDataList } from '../../../types/users-response-data-list';
+import { AnimesResponseDataList } from '../../../types/api-response-data-lists/animes-response-data-list';
+import { CharactersResponseDataList } from '../../../types/api-response-data-lists/characters-response-data-list';
+import { ClubsResponseDataList } from '../../../types/api-response-data-lists/clubs-response-data-list';
+import { MangasResponseDataList } from '../../../types/api-response-data-lists/mangas-response-data-list';
+import { PeoplesResponseDataList } from '../../../types/api-response-data-lists/peoples-response-data-list';
+import { UsersResponseDataList } from '../../../types/api-response-data-lists/users-response-data-list';
 import { categoryTypeArray } from '../../../utils/category-type-description-map';
 
 @Component({

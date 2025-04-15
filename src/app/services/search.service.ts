@@ -6,6 +6,7 @@ import { environment } from '../environments/environment';
 import { IAnimesResponse } from '../interfaces/animes-response/animes-response.interface';
 import { ICharactersResponse } from '../interfaces/characters-response/characters-response.interface';
 import { IClubsResponse } from '../interfaces/clubs-response/clubs-response.interface';
+import { IEpisodesResponse } from '../interfaces/episodes-response/episodes-response.interface';
 import { IMangasResponse } from '../interfaces/mangas-reponse/mangas-response.interface';
 import { IPeoplesResponse } from '../interfaces/peoples-response/peoples-response.interface';
 import { IUsersResponse } from '../interfaces/users-response/users-response.interface';
@@ -196,5 +197,9 @@ export class SearchService {
     additionalParams: HttpParams
   ): Observable<IUsersResponse> {
     return this.fetchData<IUsersResponse>('users', name, additionalParams);
+  }
+
+  getRecentEpisodes(): Observable<IEpisodesResponse> {
+    return this.fetchData<IEpisodesResponse>('watch/episodes');
   }
 }

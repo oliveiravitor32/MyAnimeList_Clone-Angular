@@ -1,8 +1,8 @@
 import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { take } from 'rxjs';
-import { AnimesResponseDataList } from '../../types/animes-response-data-list';
-import { CharactersResponseDataList } from '../../types/characters-response-data-list';
+import { AnimesResponseDataList } from '../../types/api-response-data-lists/animes-response-data-list';
+import { CharactersResponseDataList } from '../../types/api-response-data-lists/characters-response-data-list';
 import { SearchService } from './../../services/search.service';
 
 @Component({

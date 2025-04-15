@@ -1,11 +1,11 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
-import { AnimesResponseDataList } from '../../../../types/animes-response-data-list';
-import { CharactersResponseDataList } from '../../../../types/characters-response-data-list';
-import { ClubsResponseDataList } from '../../../../types/clubs-response-data-list';
-import { MangasResponseDataList } from '../../../../types/mangas-response-data-list';
-import { PeoplesResponseDataList } from '../../../../types/peoples-response-data-list';
-import { UsersResponseDataList } from '../../../../types/users-response-data-list';
+import { AnimesResponseDataList } from '../../../../types/api-response-data-lists/animes-response-data-list';
+import { CharactersResponseDataList } from '../../../../types/api-response-data-lists/characters-response-data-list';
+import { ClubsResponseDataList } from '../../../../types/api-response-data-lists/clubs-response-data-list';
+import { MangasResponseDataList } from '../../../../types/api-response-data-lists/mangas-response-data-list';
+import { PeoplesResponseDataList } from '../../../../types/api-response-data-lists/peoples-response-data-list';
+import { UsersResponseDataList } from '../../../../types/api-response-data-lists/users-response-data-list';
 import { AnimeListItemComponent } from './../../../items-list/anime-list-item/anime-list-item.component';
 import { CharacterListItemComponent } from './../../../items-list/character-list-item/character-list-item.component';
 import { ClubListItemComponent } from './../../../items-list/club-list-item/club-list-item.component';

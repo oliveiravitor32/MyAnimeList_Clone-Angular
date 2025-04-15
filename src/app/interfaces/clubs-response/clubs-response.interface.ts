@@ -1,4 +1,4 @@
-import { ClubsResponseDataList } from '../../types/clubs-response-data-list';
+import { ClubsResponseDataList } from '../../types/api-response-data-lists/clubs-response-data-list';
 import { IPaginationResponse } from '../pagination-response.interface';
 
 export interface IClubsResponse {

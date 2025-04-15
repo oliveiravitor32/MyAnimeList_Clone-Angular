@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { AnimesResponseDataList } from '../../../types/animes-response-data-list';
+import { AnimesResponseDataList } from '../../../types/api-response-data-lists/animes-response-data-list';
 
 @Component({
   selector: 'app-anime-leaderboard',
