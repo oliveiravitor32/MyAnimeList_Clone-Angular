@@ -1,16 +1,33 @@
-<figure class="w-full flex justify-center items-center">
-  <a
-    href="#"
-    class="relative w-full h-full"
-    [attr.aria-label]="bannerAlt || 'Promotional banner'"
+<section class="relative w-full h-auto flex justify-center items-center">
+  <img
+    src="assets/images/banner-768px.webp"
+    srcset="
+      assets/images/banner-640px.webp   640w,
+      assets/images/banner-768px.webp   768w,
+      assets/images/banner-1071px.webp 1071w
+    "
+    [alt]="bannerAlt"
+    fetchpriority="high"
+    priority
+  />
+  <div
+    class="absolute top-0 sm:top-1/4 w-full flex flex-col gap-2 sm:flex-row justify-between items-start sm:items-center p-4 md:px-8 lg:px-12"
   >
-    <img
-      class="h-auto w-full"
-      ngSrc="https://myanimelist.net/c/img/resources/pda/AF_20250316_PDA/PDA_PC_top.png"
-      [alt]="bannerAlt"
-      width="1060"
-      height="273"
-      priority
-    />
-  </a>
-</figure>
+    <div class="text-white">
+      <p class="text-base">
+        Never forget what you've seen. Save what you want to watch next.
+      </p>
+      <h2 class="text-xl sm:text-2xl font-bold">
+        Start tracking your anime today.
+      </h2>
+    </div>
+    <div class="bg-blue-default p-2">
+      <button
+        class="flex align-center text-sm lg:text-base gap-2 px-4 py-1 bg-white hover:bg-neutral-300 font-medium"
+      >
+        <fa-icon [icon]="googleIcon"></fa-icon>
+        Sign Up with Google
+      </button>
+    </div>
+  </div>
+</section>

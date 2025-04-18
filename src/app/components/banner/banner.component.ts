@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-
+import { faGoogle } from '@fortawesome/free-brands-svg-icons';
 @Component({
   selector: 'app-banner',
   templateUrl: './banner.component.html',
@@ -7,6 +7,8 @@ import { Component } from '@angular/core';
 })
 export class BannerComponent {
   get bannerAlt() {
-    return 'Event Announcement Chainsaw Man Draw 03 2025';
+    return 'Start tracking your anime today.';
   }
+
+  googleIcon = faGoogle;
 }
