@@ -23,6 +23,7 @@ export class HomeComponent implements OnInit {
     this.getNextSeasonAnimes();
     this.getTopUpcomingAnimes();
     this.getMostPopularAnimes();
+    this.getRecentEpisodes();
   }
 
   getMostPopularAnimes(): void {

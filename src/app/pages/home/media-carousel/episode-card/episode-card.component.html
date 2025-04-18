@@ -1,0 +1,42 @@
+@if(item) {
+<li
+  class="flex-shrink-0 w-[110px] h-[170px]"
+  role="listitem"
+  [title]="item.entry.title || 'Unknown'"
+>
+  <a
+    class="w-full h-full focus-within:opacity-65 hover:opacity-65 transition-opacity duration-400"
+    [attr.aria-label]="'View episodes for ' + (item.entry.title || 'Unknown')"
+    tabindex="{{ tabindex }}"
+    [href]="item.entry.url || '#'"
+  >
+    <figure class="relative w-full h-full flex items-end justify-center">
+      <img
+        [ngSrc]="
+          item.entry.images.webp.image_url || item.entry.images.jpg.image_url
+        "
+        [alt]="'Cover image for ' + (item.entry.title || 'Unknown')"
+        loading="lazy"
+        fill
+        class="absolute z-0"
+      />
+      <figcaption
+        class="w-full z-10 p-2 pt-6 text-white bg-gradient-to-t from-gray-default to-transparent font-medium text-xs leading-tight"
+      >
+        <ol>
+          @for (episode of item.episodes; track $index) {
+          <li>{{ episode.title }}</li>
+          }
+        </ol>
+      </figcaption>
+    </figure>
+  </a>
+</li>
+} @else {
+<li
+  tabindex="{{ tabindex }}"
+  class="relative flex-shrink-0 w-[110px] h-[170px] bg-gray-700 animate-pulse"
+>
+  <span class="sr-only">Loading item...</span>
+</li>
+}

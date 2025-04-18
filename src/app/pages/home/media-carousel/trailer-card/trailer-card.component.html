@@ -1,0 +1,50 @@
+@if(item) {
+<li
+  class="flex-shrink-0 w-[220px] h-[120px]"
+  role="listitem"
+  [title]="(item.title_english || item.title || 'Unknown') + ' Trailer'"
+>
+  <a
+    class="w-full h-full focus-within:opacity-65 hover:opacity-65 transition-opacity duration-400"
+    [attr.aria-label]="
+      'View the trailer for ' + item.title_english || item.title
+    "
+    tabindex="{{ tabindex }}"
+    [href]="item.url || '#'"
+  >
+    <figure class="relative w-full h-full flex items-end justify-center">
+      <img
+        [ngSrc]="
+          item.trailer.images.medium_image_url || item.images.webp.image_url
+        "
+        [alt]="
+          'Cover image for ' + (item.title_english || item.title) + 'trailer'
+        "
+        loading="lazy"
+        fill
+        class="absolute z-0"
+      />
+      <span
+        class="absolute px-4 py-0.5 left-2/4 top-2/4 -translate-y-1/2 -translate-x-1/2 z-10 bg-gray-dark opacity-80 border-2 border-white rounded-sm"
+      >
+        <fa-icon class="text-white text-base" [icon]="playIcon"></fa-icon>
+      </span>
+    </figure>
+  </a>
+  <a
+    [href]="item.url || '#'"
+    [title]="item.title_english || item.title || 'Unknown'"
+    tabindex="-1"
+    class="w-full z-10 p-2 pt-6 text-blue-extralight font-medium text-xs leading-tight hover:underline"
+  >
+    {{ item.title_english || item.title }}</a
+  >
+</li>
+} @else {
+<li
+  tabindex="-1"
+  class="relative flex-shrink-0 w-[220px] h-[120px] bg-gray-700 animate-pulse"
+>
+  <span class="sr-only">Loading item...</span>
+</li>
+}

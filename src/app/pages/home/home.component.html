@@ -13,16 +13,41 @@
         title="Next Season Animes"
         viewMoreLink="#"
         [items]="nextSeasonAnimes"
-        itemType="anime"
+        [cardTemplate]="animeCardTemplate"
+        itemType="default"
       >
       </app-media-carousel>
+      <ng-template #animeCardTemplate let-item let-tabindex="tabindex">
+        <app-anime-card [item]="item" [tabindex]="tabindex"></app-anime-card>
+      </ng-template>
+      <app-media-carousel
+        title="Latest Updated Episode Videos"
+        viewMoreLink="#"
+        [items]="recentEpisodes"
+        [cardTemplate]="episodeCardTemplate"
+        itemType="small"
+      >
+      </app-media-carousel>
+      <ng-template #episodeCardTemplate let-item let-tabindex="tabindex">
+        <app-episode-card
+          [item]="item"
+          [tabindex]="tabindex"
+        ></app-episode-card>
+      </ng-template>
       <app-media-carousel
         title="Most Popular Anime Trailers"
         viewMoreLink="#"
         [items]="mostPopularAnimes"
-        itemType="trailer"
+        [cardTemplate]="trailerCardTemplate"
+        itemType="wide"
       >
       </app-media-carousel>
+      <ng-template #trailerCardTemplate let-item let-tabindex="tabindex">
+        <app-trailer-card
+          [item]="item"
+          [tabindex]="tabindex"
+        ></app-trailer-card>
+      </ng-template>
     </section>
     <aside class="w-[320px] flex flex-col px-2">
       <app-anime-leaderboard

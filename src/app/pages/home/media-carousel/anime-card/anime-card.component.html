@@ -1,0 +1,38 @@
+@if(item) {
+<li
+  class="flex-shrink-0 w-[160px] h-[220px]"
+  role="listitem"
+  [title]="item.title_english || item.title || 'Unknown'"
+>
+  <a
+    class="w-full h-full focus-within:opacity-65 hover:opacity-65 transition-opacity duration-400"
+    [attr.aria-label]="
+      'View the anime ' + (item.title_english || item.title || 'Unknown')
+    "
+    tabindex="{{ tabindex }}"
+    [href]="item.url || '#'"
+  >
+    <figure class="relative w-full h-full flex items-end justify-center">
+      <img
+        [ngSrc]="item.images.webp.image_url"
+        [alt]="'Cover image for ' + (item.title_english || item.title)"
+        priority
+        fill
+        class="absolute z-0"
+      />
+      <figcaption
+        class="w-full z-10 p-2 pt-6 text-white bg-gradient-to-t from-gray-default to-transparent font-medium text-xs leading-tight"
+      >
+        {{ item.title_english || item.title }}
+      </figcaption>
+    </figure>
+  </a>
+</li>
+} @else {
+<li
+  tabindex="-1"
+  class="relative flex-shrink-0 w-[160px] h-[220px] bg-gray-700 animate-pulse"
+>
+  <span class="sr-only">Loading item...</span>
+</li>
+}

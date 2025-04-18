@@ -25,84 +25,35 @@
       <ul #carouselTrack class="flex gap-2 w-full">
         @for(item of items; track trackById) { @defer(when
         shouldLoadItem($index)) {
-        <li
-          class="flex-shrink-0"
-          [style.width]="getWidth"
-          [style.height]="getHeight"
-          [title]="
-            isTrailer
-              ? (item.title_english || item.title || 'Unknown') + ' Trailer'
-              : item.title_english || item.title || 'Unknown'
+        <ng-container
+          *ngTemplateOutlet="
+            cardTemplate;
+            context: {
+              $implicit: item,
+              tabindex: $index < itemsToShow ? 0 : -1
+            }
           "
         >
-          <a
-            class="w-full h-full focus-within:opacity-65 hover:opacity-65 transition-opacity duration-400"
-            [tabindex]="$index < itemsToShow ? 0 : -1"
-            [href]="item.url || '#'"
-          >
-            <figure
-              class="relative w-full h-full flex items-end justify-center"
-            >
-              <img
-                [src]="
-                  isTrailer
-                    ? item.trailer.images.medium_image_url ||
-                      item.images.webp.image_url
-                    : item.images.webp.image_url
-                "
-                [alt]="item.title_english || item.title"
-                loading="lazy"
-                fill
-                class="absolute z-0"
-                [style.width]="getWidth"
-                [style.height]="getHeight"
-              />
-
-              @if(isTrailer) {
-              <span
-                class="absolute px-4 py-0.5 left-2/4 top-2/4 -translate-y-1/2 -translate-x-1/2 z-10 bg-gray-dark opacity-80 border-2 border-white rounded-sm"
-              >
-                <fa-icon
-                  class="text-white text-base"
-                  [icon]="playIcon"
-                ></fa-icon>
-              </span>
-              } @else {
-              <figcaption
-                class="w-full z-10 p-2 pt-6 text-white bg-gradient-to-t from-gray-default to-transparent font-medium text-xs leading-tight"
-              >
-                {{ item.title_english || item.title }}
-              </figcaption>
-              }
-            </figure>
-          </a>
-          @if(isTrailer) {
-          <a
-            [href]="item.url || '#'"
-            [title]="item.title_english || item.title || 'Unknown'"
-            tabindex="-1"
-            class="w-full z-10 p-2 pt-6 text-blue-extralight font-medium text-xs leading-tight hover:underline"
-          >
-            {{ item.title_english || item.title }}</a
-          >
-          }
-        </li>
+        </ng-container>
         } @placeholder {
-        <li
-          tabindex="-1"
-          class="relative flex-shrink-0 w-[110px] h-[150px] bg-gray-700 animate-pulse"
-        >
-          <span class="sr-only">Loading item...</span>
-        </li>
+        <ng-container
+          *ngTemplateOutlet="
+            cardTemplate;
+            context: {
+              tabindex: -1
+            }
+          "
+        ></ng-container>
         } }@empty { @for(item of emptyArray; track $index) {
-        <li
-          tabindex="-1"
-          class="relative flex-shrink-0 w-[110px] h-[150px] bg-gray-700 animate-pulse"
-          [style.width]="getWidth"
-          [style.height]="getHeight"
+        <ng-container
+          *ngTemplateOutlet="
+            cardTemplate;
+            context: {
+              tabindex: -1
+            }
+          "
         >
-          <span class="sr-only">Loading item...</span>
-        </li>
+        </ng-container>
         } }
       </ul>
     </div>

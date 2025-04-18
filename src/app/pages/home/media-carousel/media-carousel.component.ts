@@ -6,15 +6,14 @@ import {
   HostListener,
   Input,
   OnDestroy,
+  TemplateRef,
   ViewChild,
 } from '@angular/core';
 import {
   faChevronLeft,
   faChevronRight,
-  faPlay,
 } from '@fortawesome/free-solid-svg-icons';
 import { debounceTime, Subject, Subscription } from 'rxjs';
-import { AnimesResponseDataList } from '../../../types/api-response-data-lists/animes-response-data-list';
 
 @Component({
   selector: 'app-media-carousel',
@@ -29,23 +28,14 @@ export class MediaCarouselComponent implements AfterViewInit, OnDestroy {
 
   @Input({ required: true }) title: string = 'N/A';
   @Input({ required: true }) viewMoreLink: string = '#';
-  @Input({ required: true }) items: AnimesResponseDataList = [];
-  @Input({ required: true }) itemType: string = 'anime';
+  @Input({ required: true }) items: any = [];
+  @Input({ required: true }) itemType: string = 'default';
 
-  private sizes: { [key: string]: { width: string; height: string } } = {
-    anime: {
-      width: '160px',
-      height: '220px',
-    },
-    trailer: {
-      width: '220px',
-      height: '120px',
-    },
-  };
+  @Input({ required: true }) cardTemplate!: TemplateRef<any>;
 
   @ViewChild('carouselTrack') carouselTrack!: ElementRef<HTMLDivElement>;
 
-  private readonly ANIMATION_DURATION = 500;
+  private readonly ANIMATION_DURATION = 500; // milliseconds
   private animationTimeout?: ReturnType<typeof setTimeout>;
 
   private readonly resizeDebounceTime = 200; // milliseconds
@@ -57,9 +47,11 @@ export class MediaCarouselComponent implements AfterViewInit, OnDestroy {
   private isAnimating: boolean = false;
   itemsToShow: number = 4;
 
+  // empty array to fill the space when is loading
+  emptyArray: number[] = Array.from({ length: 6 });
+
   leftArrowIcon = faChevronLeft;
   rightArrowIcon = faChevronRight;
-  playIcon = faPlay;
 
   constructor() {
     this.resizeSubscription = this.resizeSubject
@@ -67,23 +59,6 @@ export class MediaCarouselComponent implements AfterViewInit, OnDestroy {
       .subscribe(() => {
         this.calculateDimensions();
       });
-  }
-
-  get getWidth(): string {
-    return this.sizes[this.itemType].width || this.sizes['anime'].width;
-  }
-
-  get getHeight(): string {
-    return this.sizes[this.itemType].height || this.sizes['anime'].height;
-  }
-
-  get isTrailer(): boolean {
-    return this.itemType === 'trailer';
-  }
-
-  // Get empty array to fill the space when is loading
-  get emptyArray(): any[] {
-    return Array.from({ length: this.itemsToShow + 1 });
   }
 
   ngAfterViewInit(): void {
@@ -94,24 +69,25 @@ export class MediaCarouselComponent implements AfterViewInit, OnDestroy {
   shouldLoadItem(index: number) {
     if (this.items.length < this.itemsToShow) return true;
 
-    // Only load items that are within the current view or will appear on the next slide
-    return index <= this.itemsToShow + this.itemsMovedPerSlide;
+    // Only load items that are within the current view or will appear on the next slide action
+    return (
+      index <= this.itemsToShow + this.itemsMovedPerSlide ||
+      index >= this.items.length - this.itemsMovedPerSlide
+    );
   }
 
   calculateDimensions(): void {
     if (!this.carouselTrack?.nativeElement) return;
 
-    const track = this.carouselTrack.nativeElement;
-
-    // Adjust total of slides
-    if (this.isTrailer) {
-      this.itemsToShow = 3;
-    }
+    const trackEl = this.carouselTrack.nativeElement;
 
     // Calculate slide width based on first item
-    if (track.children[0]) {
-      this.slideWidth = track.children[0].clientWidth + 8; // width + gap
+    if (trackEl.children[0]) {
+      this.slideWidth = trackEl.children[0].clientWidth + 8; // width + gap;
     }
+
+    // Set max items to show based on track width
+    this.itemsToShow = Math.floor(trackEl.clientWidth / this.slideWidth);
   }
 
   next(): void {
